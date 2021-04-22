@@ -1,0 +1,113 @@
+.strong-title-Vendor {
+    margin-left: 15px;
+}
+
+.mar {
+    margin-left: 40px;
+}
+
+.input-1 {
+    width: 1100px;
+    height: 100px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: 15px;
+}
+
+.form-input {
+    width: 480px;
+    height: 35px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: 15px;
+}
+
+.khungRegis {
+    border-radius: 20px;
+    border: ridge;
+    width: 1200px;
+    border-color: #eaa28b;
+    height: 780px;
+    margin-left: 320px;
+    margin-top: 100px;
+}
+
+.flex-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 1100px;
+    margin-left: 45px;
+}
+
+.hr-DK {
+    width: 560px;
+}
+
+.btn-DK {
+    background-image: linear-gradient(130deg, #eb673c 0%, #ac7664 100%);
+    color: black;
+    border-color: #eb673c;
+    width: 1100px;
+    height: 40px;
+    margin-top: 5px;
+    margin-left: 55px;
+    font-size: 18px;
+}
+
+.btn-DK:hover {
+    background-image: linear-gradient(130deg, #eb673c 0%, #ac7664 100%);
+    color: white;
+}
+
+.title-description {
+    text-align: center;
+}
+
+.title-description:hover {
+    color: cadetblue;
+}
+
+@media only screen and (max-width: 500px) {
+    .khungRegis {
+        width: 315px;
+        margin-left: 50px;
+        margin-top: 1px;
+        height: 810px;
+    }
+    .flex-form {
+        width: 300px;
+        margin-left: 10px;
+    }
+    br {
+        display: none;
+    }
+    .input-1 {
+        width: 270px;
+        height: 50px;
+    }
+    .btn-DK {
+        width: 270px;
+        margin-left: 22px;
+    }
+    .mar {
+        margin-left: 7px;
+    }
+    .hr-DK {
+        width: 150px;
+    }
+    .form-input {
+        width: 270px;
+    }
+    .title-description {
+        font-size: 13px;
+    }
+}
