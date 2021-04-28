@@ -6,7 +6,6 @@
     font-size: medium;
     color: inherit;
   }
-
   .nameWeb {
     position: relative;
     display: flex;
@@ -23,12 +22,10 @@
     font-family: Arial, Helvetica, sans-serif;
     font-family: serif;
   }
-
   .nameWeb li:nth-child(2) {
     margin-left: 20px;
     letter-spacing: 1px;
   }
-
   .nameWeb li a {
     color: white;
   }
@@ -38,7 +35,6 @@
     display: flex;
     justify-content: space-between;
   }
-
   .right_contain .icon {
     padding: 0px 10px;
     border-right: 1px solid rgb(230, 230, 230);
@@ -61,12 +57,10 @@
     margin-left: 30px;
     color: white;
   }
-
   .user a {
     text-decoration: none;
     color: rgb(230, 230, 230);
   }
-
   .user span {
     color: rgb(230, 230, 230);
   }
@@ -97,13 +91,11 @@
     padding-top: 10px;
     margin-right: 200px;
   }
-
   .navi ul li {
     position: relative;
     list-style: none;
     align-items: center;
   }
-
   .navi ul li a {
     position: relative;
     padding: 0 10px;
