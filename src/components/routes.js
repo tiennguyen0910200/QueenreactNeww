@@ -9,7 +9,6 @@ import Restaurant from './user/restaurant/Restaurant.js';
 import Plan from './user/plan/Plan.js';
 import Service from './user/service/Service.js';
 import Search from './user/search/Search.js';
-import Login from './Login';
 import LoginAuthen from './LoginAuthen.js';
 import RegisterAuthen from './RegisterAuthen.js';
 import Checkout from './user/cart/Checkout.js';

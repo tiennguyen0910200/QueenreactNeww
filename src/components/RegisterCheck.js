@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './style/registerCheck.css';
+// import './style/registerCheck.css';
 import { Link, withRouter } from 'react-router-dom';
 class RegisterCheck extends Component{
     render(){

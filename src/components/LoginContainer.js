@@ -117,18 +117,21 @@ class LoginContainer extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
+                    {/* <div className="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
                         {this.state.isLoggedIn ? <FlashMessage duration={60000} persistOnHover={true}>
                             <h5 className={"alert alert-success"}>Login successful, redirecting...</h5></FlashMessage> : ''}
                         {this.state.error ? <FlashMessage duration={100000} persistOnHover={true}>
                             <h5 className={"alert alert-danger"}>Error: {this.state.error}</h5></FlashMessage> : ''}
                         {error && !this.state.isLoggedIn ? <FlashMessage duration={100000} persistOnHover={true}>
                             <h5 className={"alert alert-danger"}>Error: {error}</h5></FlashMessage> : ''}
-                        <form className="khungLogin" onSubmit={this.handleSubmit}>
+                        
+                    </div> */}
+                    <form className="khungLogin" onSubmit={this.handleSubmit}>
                             <h1 className="title-Login"> Đăng nhập </h1>
                             <hr className="hr-Login" />
-                            <img className="img-logo" src="https://www.linkpicture.com/q/logo2_6.png" />
-                            <h5 className="queen"><i>Queen Party</i> </h5>
+                            <div className="logo-login">
+                                <img className="img-logo" src="https://www.linkpicture.com/q/logo2_6.png" />
+                            </div>
                             <div className="contentLogin">
                                 <div>
                                     <div>
@@ -165,10 +168,9 @@ class LoginContainer extends Component {
                             <button className="btn-Login" disabled={this.state.formSubmitting} type="submit" name="singlebutton" ><b>{this.state.formSubmitting ? "Bạn đang đăng nhập vào..." : "Đăng nhập"}</b></button>
                             <br />
                             <p className="description-Login">
-                                <b>Bạn chưa có tài khoản? <Link to="/home/registerCheck" className="text-yellow"> Đăng kí ngay</Link></b>
+                                <b>Bạn chưa có tài khoản? <Link to="/home/register" className="text-yellow"> Đăng kí ngay</Link></b>
                             </p>
                         </form>
-                    </div>
                     {/* <p className="text-white">Don't have an account? <Link to="/register" className="text-yellow"> Register</Link> |
           <span className="pull-right">
                             <Link to="/" className="text-white">Back to Index</Link>
