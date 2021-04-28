@@ -1,5 +1,5 @@
 @media only screen and (min-width: 500px) {
-  .header {
+  /* .header {
     display: flex;
     background-color: #1e2022;
     justify-content: space-between;
@@ -150,5 +150,12 @@
     justify-content: space-around;
     margin-left: 15rem;
     margin-top: 2rem;
+  } */
+  .mb-1,
+  .my-1 {
+    background-color: #ed9e90;
+  }
+  .navbar-dark .navbar-nav .nav-link {
+    color: #fff;
   }
 }

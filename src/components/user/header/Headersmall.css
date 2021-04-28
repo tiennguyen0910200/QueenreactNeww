@@ -1,5 +1,5 @@
 @media only screen and (max-width: 500px) {
-  html {
+  /* html {
     font-size: 16px;
   }
   .small {
@@ -159,5 +159,12 @@
   .dnhap {
     text-decoration: none;
     color: white;
+  } */
+  .mb-1,
+  .my-1 {
+    background-color: #ed9e90;
+  }
+  .navbar-dark .navbar-nav .nav-link {
+    color: #fff;
   }
 }
