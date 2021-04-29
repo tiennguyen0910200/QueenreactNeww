@@ -37,7 +37,7 @@ class DetailFood extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let user_id = localStorage.getItem("idUser");
-      let vendor_id = localStorage.getItem("id_vendor");
+      let vendor_id = localStorage.getItem("vendor_id");
       var id = this.props.match.params.id;
       let orders = {
         product_id: id,

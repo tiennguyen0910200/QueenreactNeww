@@ -54,38 +54,27 @@ class Checkout extends Component {
     onOrderSubmit(event) {
         event.preventDefault();
         let user_id = localStorage.getItem("idUser");
-        let vendor_id = localStorage.getItem("id_vendor");
         // var id = this.props.match.params.id;
 
-        let username = event.target["username"].value;
-        let phone_number = event.target["phone_number"].value;
+        let name = event.target["name"].value;
+        let phone = event.target["phone"].value;
         let address = event.target["address"].value;
         let order_time = event.target["order_time"].value;
-        let quantiy_mam = event.target["quantity_mam"].value;
         let note = event.target["note"].value;
 
         let order = {
-            user_id: user_id,
-            vendor_id: vendor_id,
-            username: username,
-            phone_number: phone_number,
+            name: name,
+            phone: phone,
             address: address,
             order_time: order_time,
-            quantiy_mam: quantiy_mam,
             note: note,
+            user_id: user_id
         }
         let postInJson = JSON.stringify(order);
         fetch("http://127.0.0.1:8000/api/product/order", {
-            mode: 'no-cors',
             method: "POST",
             headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Max-Age": "1800",
-                "Access-Control-Allow-Headers": "content-type",
-                "Access-Control-Allow-Methods": "PUT, POST, GET, DELETE, PATCH, OPTIONS",
                 "Content-Type": "application/json",
-                'Authorization': user_id,
             },
             body: postInJson
         })
@@ -126,16 +115,26 @@ class Checkout extends Component {
                                     {this.state.carts.map((cart, index) =>
                                         <div>
                                             <div class="product-flex">
-                                                <div>
+                                                {/* <div>
                                                     <img className="imageCheck" src={'http://127.0.0.1:8000/storage/' + cart.picture} />
                                                 </div>
-                                                <div>{cart.name_product}</div>
-                                                <div>
+                                                <div style={{float: "left", margin: "10px"}}>{cart.ProductName}</div>
+                                                <div style={{float: "left" , margin: "10px"}}>
                                                     {cart.price} <span>VNĐ</span>
                                                 </div>
+                                                <div style={{float: "left", margin: "10px"}}>{cart.VendorName}</div>
                                                 <div>
                                                     <button className="button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                                </div>
+                                                </div> */}
+                                                <table>
+                                                    <tr>
+                                                        <td style={{paddingLeft: "5px", }}><img className="imageCheck" src={'http://127.0.0.1:8000/storage/' + cart.picture} /></td>
+                                                        <td style={{paddingLeft: "20px", width: "150px"}}>{cart.ProductName}</td>
+                                                        <td style={{paddingLeft: "10px",}}>{cart.price} <span>VNĐ</span></td>
+                                                        <td style={{paddingLeft: "20px", fontWeight: 600, fontStyle: "italic"}}>{cart.VendorName}</td>
+                                                        <td style={{paddingLeft: "20px", paddingRight: "5px"}}><button className="button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                    </tr>
+                                                </table>
 
                                             </div>
                                             <hr className="hr-payment" />
@@ -191,7 +190,7 @@ class Checkout extends Component {
                                                 </div>
                                                 <div>
                                                     <input
-                                                        className="form-input-checkout" id="username" type="text" name="username"
+                                                        className="form-input-checkout" id="name" type="text" name="name"
                                                         placeholder="Tên của bạn.." required
                                                     />
                                                 </div>
@@ -202,7 +201,7 @@ class Checkout extends Component {
                                                 </div>
                                                 <div>
                                                     <input
-                                                        className="form-input-checkout" id="phone_number" name="phone_number" type="number"
+                                                        className="form-input-checkout" id="phone" name="phone" type="number"
                                                         placeholder="Số điện thoại của bạn.." required type="number"
                                                     />
                                                 </div>
@@ -224,18 +223,6 @@ class Checkout extends Component {
                                                 </div>
                                                 <div>
                                                     <input className="form-input-checkout" type="date" id="order_time" name="order_time" required />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div>
-                                                    <strong className="strong-titleCheck">Số mâm  <span className="required">(*)</span></strong>
-                                                </div>
-                                                <div>
-                                                    <input
-                                                        className="form-input-checkout" id="quantity_mam" name="quantity_mam"
-                                                        type="number"
-                                                        placeholder="Số mâm.." required
-                                                    />
                                                 </div>
                                             </div>
                                             <div>

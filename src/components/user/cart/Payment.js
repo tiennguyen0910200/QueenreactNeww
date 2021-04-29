@@ -95,9 +95,9 @@ class Payment extends Component {
                                     </div>
                                     <div>
                                         <b>
-                                            <div className="margin">{userorder.username}</div>
+                                            <div className="margin">{userorder.name}</div>
                                             <div className="margin">{userorder.address}</div>
-                                            <div className="margin">{userorder.phone_number}</div>
+                                            <div className="margin">{userorder.phone}</div>
                                             <div className="margin">{userorder.order_time}</div>
                                             <div className="margin">{userorder.note}</div>
                                         </b>
@@ -137,7 +137,6 @@ class Payment extends Component {
                                         id="huey"
                                         name="drone"
                                         value="tindung"
-                                        checked
                                     />
               Thanh toán thẻ tín dụng
               <br />

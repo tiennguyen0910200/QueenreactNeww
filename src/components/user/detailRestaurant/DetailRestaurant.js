@@ -17,13 +17,14 @@ class DetailRestaurant extends Component {
             btnComment: false,
         };
         var id = props.match.params.id;
-        localStorage.setItem("id_vendor", id);
+        localStorage.setItem("vendor_id", id);
         this.getDetail(id);
         this.getProduct(id);
         this.onAddComment = this.onAddComment.bind(this);
         this.buttonComment = this.buttonComment.bind(this);
     }
     getDetail(id) {
+        let vendor_id = localStorage.getItem("vendor_id");
         fetch("http://127.0.0.1:8000/api/vendor/detail/" + id).then((response) => {
             response.json().then((data) => {
                 console.log(data);
@@ -57,7 +58,7 @@ class DetailRestaurant extends Component {
     onAddComment(event) {
         event.preventDefault();
         let content = event.target["comment"].value;
-        let vendor_id = localStorage.getItem("id_vendor");
+        let vendor_id = localStorage.getItem("vendor_id");
         // let user_id = event.target['user_id'].value;
         //let user_id = localStorage.getItem('user_id');
         var id = this.props.match.params.id;

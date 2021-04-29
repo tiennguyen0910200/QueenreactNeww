@@ -126,9 +126,11 @@ class Header extends Component {
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link waves-effect waves-light">
-                                    <i class="fas fa-cart-plus"/>
-                                </a>
+                                <Link to="/home/checkout">
+                                    <a className="nav-link waves-effect waves-light">
+                                        <i class="fas fa-cart-plus"/>
+                                    </a>
+                                </Link>
                             </li>
                             <li className="nav-item">
                                 

@@ -3,12 +3,12 @@
     font-size: 17px;
   }
   
-  .product-flex {
+  /* .product-flex {
     display: flex;
     justify-content: space-between;
     width: 700px;
     margin-left: -160px;
-  }
+  } */
   
   .flexKhung {
     display: flex;
@@ -102,8 +102,7 @@
   .product-flex {
     display: flex;
     justify-content: space-between;
-    width: 550px;
-    margin-left: 20px;
+    margin-right: 10px;
   }
   .button-delete {
     border: none;
