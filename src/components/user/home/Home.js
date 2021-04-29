@@ -158,39 +158,40 @@ class Home extends Component {
               {this.state.foodRestaurant.map((foodr) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + foodr.avatar}
+                      class="image"
+                    />
                     <Link to={"/home/vendor/detail/" + foodr.id}>
                       {" "}
-                      <img
-                        src={"http://127.0.0.1:8000/storage/" + foodr.avatar}
-                      />
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
                     </Link>
                     <p>{foodr.name}</p>
-                    {this.state.valueSearch && (
-                      <h2 className="name_vendor">{foodr.fullname}</h2>
-                    )}
                   </div>
                 </div>
               ))}
             </div>
             <hr />
           </div>
-
           <div class="container">
             <h3 style={{ textAlign: "center" }}>LOA MÁY</h3>
             <div class="row">
               {this.state.speakerRestaurant.map((speakerr) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + speakerr.avatar}
+                      class="image"
+                    />
                     <Link to={"/home/vendor/detail/" + speakerr.id}>
                       {" "}
-                      <img
-                        src={"http://127.0.0.1:8000/storage/" + speakerr.avatar}
-                      />
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
                     </Link>
                     <p>{speakerr.name}</p>
-                    {this.state.valueSearch && (
-                      <h2 className="name_vendor">{speakerr.fullname}</h2>
-                    )}
                   </div>
                 </div>
               ))}
@@ -203,16 +204,14 @@ class Home extends Component {
               {this.state.cakeRestaurant.map((cake) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
+                    <img src={"http://127.0.0.1:8000/storage/" + cake.avatar} class="image" />
                     <Link to={"/home/vendor/detail/" + cake.id}>
                       {" "}
-                      <img
-                        src={"http://127.0.0.1:8000/storage/" + cake.avatar}
-                      />
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
                     </Link>
                     <p>{cake.name}</p>
-                    {this.state.valueSearch && (
-                      <h2 className="name_vendor">{cake.fullname}</h2>
-                    )}
                   </div>
                 </div>
               ))}
@@ -225,16 +224,17 @@ class Home extends Component {
               {this.state.decorRestaurant.map((decor) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + decor.avatar}
+                      class="image"
+                    />
                     <Link to={"/home/vendor/detail/" + decor.id}>
                       {" "}
-                      <img
-                        src={"http://127.0.0.1:8000/storage/" + decor.avatar}
-                      />
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
                     </Link>
                     <p>{decor.name}</p>
-                    {this.state.valueSearch && (
-                      <h2 className="name_vendor">{decor.fullname}</h2>
-                    )}
                   </div>
                 </div>
               ))}

@@ -91,6 +91,18 @@ class Restaurant extends Component {
                       <li>
                         <a href="#about">Nhà hàng liên quan</a>
                       </li>
+                      <li>
+                        <a href="#about">Dịch vụ thức ăn</a>
+                      </li>
+                      <li>
+                        <a href="#about">Dịch vụ bánh kem</a>
+                      </li>
+                      <li>
+                        <a href="#about">Dịch vụ trang trí</a>
+                      </li>
+                      <li>
+                        <a href="#about">Dịch vụ loa máy</a>
+                      </li>
                     </ul>
                   </div>
                   <br />
@@ -112,19 +124,34 @@ class Restaurant extends Component {
                       <li>
                         <label>
                           <input type="checkbox" checked="checked" />
-                          &ensp;Đúng nguồn gốc
+                          &ensp;Cam kết nguồn gốc
                         </label>
                         <br />
                         <label>
                           <input type="checkbox" checked="checked" />
-                          &ensp;Đúng chất lượng
+                          &ensp;Cam kết chất lượng
                         </label>
                         <br />
                         <label>
                           <input type="checkbox" checked="checked" />
-                          &ensp;Đúng giá sản phẩm
+                          &ensp;Cam kết giá sản phẩm
                         </label>
                         <br />
+                        <label>
+                          <input type="checkbox" checked="checked" />
+                          &ensp;Cam kết thời gian
+                        </label>
+                        <br/>
+                        <label>
+                          <input type="checkbox" checked="checked" />
+                          &ensp;Cam kết nguyên vẹn
+                        </label>
+                        <br/>
+                        <label>
+                          <input type="checkbox" checked="checked" />
+                          &ensp;Cam kết giá cả
+                        </label>
+                        <br/>
                         <label>
                           <input type="checkbox" checked="checked" />
                           &ensp;Cam kết hoàn tiền 100%
@@ -154,7 +181,12 @@ class Restaurant extends Component {
                    <div class="col-sm-4">
                     <div>
                       <div className="allfoodRestaurant">
-                      <Link to ={'/home/vendor/detail/'+food.id}><img src={'http://127.0.0.1:8000/storage/'+ food.avatar }/> </Link>
+                      <img src={'http://127.0.0.1:8000/storage/'+ food.avatar } className="image"/>
+                      <Link to ={'/home/vendor/detail/'+food.id}>
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                      </Link>
                       </div>
                       <p >{food.name}</p>  
                       </div>                         
@@ -172,7 +204,12 @@ class Restaurant extends Component {
                    <div class="col-sm-4">
                     <div>
                       <div className="allfoodRestaurant">
-                      <Link to ={'/home/vendor/detail/'+cake.id}><img src={'http://127.0.0.1:8000/storage/'+ cake.avatar }/> </Link>
+                      <img src={'http://127.0.0.1:8000/storage/'+ cake.avatar } className="image"/> 
+                      <Link to ={'/home/vendor/detail/'+cake.id}>
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                      </Link>
                       </div>
                       <p >{cake.name}</p>  
                       </div>                         
@@ -182,15 +219,23 @@ class Restaurant extends Component {
                  </div>
                  
                </div>
-               <div class="container">
+
+              </div>
+            </div>
+            <div class="container">
                <h3>Dịch Vụ Loa Máy</h3>
                  <div class="row">
                    
                    {this.state.speakerrestaurant.map((speaker)=>
-                   <div class="col-sm-4">
+                   <div class="col-sm-3">
                     <div>
                       <div className="allfoodRestaurant">
-                      <Link to ={'/home/vendor/detail/'+speaker.id}><img src={'http://127.0.0.1:8000/storage/'+ speaker.avatar }/> </Link>
+                      <img src={'http://127.0.0.1:8000/storage/'+ speaker.avatar } className="image"/> 
+                      <Link to ={'/home/vendor/detail/'+speaker.id}>
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                      </Link>
                       </div>
                       <p >{speaker.name}</p>  
                       </div>                         
@@ -205,10 +250,15 @@ class Restaurant extends Component {
                  <div class="row">
                    
                    {this.state.decorrestaurant.map((decor)=>
-                   <div class="col-sm-4">
+                   <div class="col-sm-3">
                     <div>
                       <div className="allfoodRestaurant">
-                      <Link to ={'/home/vendor/detail/'+decor.id}><img src={'http://127.0.0.1:8000/storage/'+ decor.avatar }/> </Link>
+                      <img src={'http://127.0.0.1:8000/storage/'+ decor.avatar } className="image"/>
+                      <Link to ={'/home/vendor/detail/'+decor.id}>
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div> 
+                      </Link>
                       </div>
                       <p >{decor.name}</p>  
                       </div>                         
@@ -218,8 +268,6 @@ class Restaurant extends Component {
                  </div>
                  
                </div>
-              </div>
-            </div>
           </div>
         </div>
         <Footer />
