@@ -79,19 +79,16 @@ class Checkout extends Component {
             body: postInJson
         })
             .then(response => {
-                console.log(order);
-                // window.location.reload();
-                alert('Xác nhận đơn hàng');
-                this.props.history.push('/home/payment');
-
+                // console.log(order);
+                // // window.location.reload();
+                // alert('Xác nhận đơn hàng');
+                // this.props.history.push('/home/payment');
+                response.json().then((order) => {
+                    console.log(order);
+                    alert('Xác nhận đơn hàng');
+                    this.props.history.push('/home/payment');
+                });
             });
-        // .then(response => {
-        //     console.log(order);
-        //     // window.location.reload();
-        //     alert('Xác nhận đơn hàng');
-        //     this.props.history.push('/home/payment');
-
-        // });
     }
 
     render() {
@@ -131,8 +128,8 @@ class Checkout extends Component {
                                                         <td style={{paddingLeft: "5px", }}><img className="imageCheck" src={'http://127.0.0.1:8000/storage/' + cart.picture} /></td>
                                                         <td style={{paddingLeft: "20px", width: "150px"}}>{cart.ProductName}</td>
                                                         <td style={{paddingLeft: "10px",}}>{cart.price} <span>VNĐ</span></td>
-                                                        <td style={{paddingLeft: "20px", fontWeight: 600, fontStyle: "italic"}}>{cart.VendorName}</td>
-                                                        <td style={{paddingLeft: "20px", paddingRight: "5px"}}><button className="button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                        <td style={{paddingLeft: "20px", fontWeight: 600, fontStyle: "italic", width: "200px"}}>{cart.VendorName}</td>
+                                                        <td style={{paddingRight: "5px"}}><button className="button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                                                     </tr>
                                                 </table>
 
