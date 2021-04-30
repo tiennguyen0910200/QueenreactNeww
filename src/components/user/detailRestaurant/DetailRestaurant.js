@@ -20,6 +20,7 @@ class DetailRestaurant extends Component {
     localStorage.setItem("id_vendor", id);
     this.getDetail(id);
     this.getProduct(id);
+    this.getAllComment(id);
     this.onAddComment = this.onAddComment.bind(this);
     this.buttonComment = this.buttonComment.bind(this);
   }
@@ -46,39 +47,41 @@ class DetailRestaurant extends Component {
 
   getAllComment(id) {
     fetch("http://127.0.0.1:8000/api/totalComment/" + id).then((response) => {
+      console.log(response);
       response.json().then((data) => {
         console.log(data);
         this.setState({
-          getdataComment: data,
+          getdataComment: data, 
         });
       });
     });
   }
   onAddComment(event) {
     event.preventDefault();
-    let content = event.target["comment"].value;
-    let vendor_id = localStorage.getItem("id_vendor");
+    let content = event.target['comment'].value;
+    let vendor_id = localStorage.getItem('id_vendor');
     // let user_id = event.target['user_id'].value;
     //let user_id = localStorage.getItem('user_id');
     var id = this.props.match.params.id;
-    console.log(id);
     let comment = {
       user_id: 2,
-      content: content,
-    };
+      content: content
+    }
 
     let postInJson = JSON.stringify(comment);
     console.log(vendor_id);
     fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
       method: "post",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: postInJson,
-    }).then((response) => {
-      console.log(response);
-      window.location.reload();
-    });
+      body: postInJson
+    })
+      .then((response) => {
+        console.log(response);
+        window.location.reload();
+      });
+  
   }
   myFunction(e) {
     e.preventDefault();
@@ -153,9 +156,6 @@ class DetailRestaurant extends Component {
                         />
                       </Link>
                       <p>{product.name}</p>
-                      {this.state.valueSearch && (
-                        <h2 className="name_vendor">{product.fullname}</h2>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -164,12 +164,12 @@ class DetailRestaurant extends Component {
             <div class="container">
               <hr />
               <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-12">
                   <h1>Đánh giá</h1>
                   <div className="danhGia">
                     {this.state.getdataComment.map((comment) => (
                       <div>
-                        <h4>{comment.name}</h4>
+                        <h6>{comment.name}</h6>
                         <p>{comment.content}</p>
                       </div>
                     ))}

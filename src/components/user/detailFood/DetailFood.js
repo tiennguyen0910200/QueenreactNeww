@@ -141,9 +141,9 @@ class DetailFood extends Component {
                 </div>
               </div>
               <div class="col-sm-8">
-                <div className="detail_order">
+                {/* <div className="detail_order"> */}
                   <h1>{detailp.name}</h1>
-                  <hr />
+                  
                   <div className="flex">
                     <div className="detail_order_name">
                       <div>
@@ -177,7 +177,7 @@ class DetailFood extends Component {
                       Đặt
                     </button>
                   </div>
-                </div>
+                {/* </div> */}
               </div>
             </div>
           </div>
