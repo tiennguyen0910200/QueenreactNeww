@@ -18,6 +18,7 @@ class DetailRestaurant extends Component {
     };
     var id = props.match.params.id;
     localStorage.setItem("id_vendor", id);
+    //localStorage.setItem("id_product", id);
     this.getDetail(id);
     this.getProduct(id);
     this.getAllComment(id);
@@ -51,7 +52,7 @@ class DetailRestaurant extends Component {
       response.json().then((data) => {
         console.log(data);
         this.setState({
-          getdataComment: data, 
+          getdataComment: data,
         });
       });
     });
@@ -59,29 +60,31 @@ class DetailRestaurant extends Component {
   onAddComment(event) {
     event.preventDefault();
     let content = event.target['comment'].value;
-    let vendor_id = localStorage.getItem('id_vendor');
+    let vendor_id = localStorage.getItem("id_vendor");
     // let user_id = event.target['user_id'].value;
     //let user_id = localStorage.getItem('user_id');
     var id = this.props.match.params.id;
+    console.log(id);
+    console.log(content);
     let comment = {
       user_id: 2,
-      content: content
-    }
+      content: content,
+      vendor_id: id,
+    };
 
     let postInJson = JSON.stringify(comment);
     console.log(vendor_id);
-    fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
+    fetch("http://127.0.0.1:8000/api/addCommentvendor/" + vendor_id, {
       method: "post",
       headers: {
         "Content-Type": "application/json"
       },
       body: postInJson
     })
-      .then((response) => {
-        console.log(response);
-        window.location.reload();
-      });
-  
+    .then((response) => {
+      console.log(response);
+      window.location.reload();
+    });
   }
   myFunction(e) {
     e.preventDefault();
@@ -108,8 +111,7 @@ class DetailRestaurant extends Component {
               <div class="row">
                 <div class="col-sm-6">
                   <div className="detail_rtr">
-
-                      <img
+                    <img
                       src={"http://127.0.0.1:8000/storage/" + detail.avatar}
                       alt=""
                     />
@@ -153,7 +155,13 @@ class DetailRestaurant extends Component {
                           src={
                             "http://127.0.0.1:8000/storage/" + product.picture
                           }
+                          className="image"
                         />
+                        <div class="middle">
+                          <div class="text">
+                            <p>{product.price}</p>
+                          </div>
+                        </div>
                       </Link>
                       <p>{product.name}</p>
                     </div>
@@ -176,12 +184,10 @@ class DetailRestaurant extends Component {
                     <br />
                     <form onSubmit={this.onAddComment}>
                       <input
-                          placeholder="Viết đánh giá..."
-                          name="comment"
-                        >
-
-                      </input>
-                      <button type="submit">Đăng</button>                      
+                        placeholder="Viết đánh giá..."
+                        name="comment"
+                      ></input>
+                      <button type="submit">Đăng</button>
                     </form>
                   </div>
                 </div>
