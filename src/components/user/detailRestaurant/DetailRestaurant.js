@@ -5,6 +5,7 @@ import "../detailRestaurant/DetailRestaurantbig.css";
 import "../detailRestaurant/DetailRestaurantsmall.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import RatingStars from '../starRating/StarsRating';
 
 class DetailRestaurant extends Component {
     constructor(props) {
@@ -175,6 +176,7 @@ class DetailRestaurant extends Component {
                             </div>
                             ))}
                             <br />
+                            <RatingStars></RatingStars>
                             <form onSubmit={this.onAddComment}>
                             <input
                                 placeholder="Viết đánh giá..."

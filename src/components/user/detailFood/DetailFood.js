@@ -5,10 +5,14 @@ import "../detailFood/DetailFoodbig.css";
 import "../detailFood/DetailFoodsmall.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 class DetailFood extends Component {
   constructor(props) {
     super(props);
     let user = localStorage.getItem("idUser");
+    
     this.state = {
       detailProduct: [],
       orders: [],
@@ -17,13 +21,17 @@ class DetailFood extends Component {
       btnOrder: false,
       login: user,
       //cart:[]
+      stars: []
     };
     var id = props.match.params.id;
+    localStorage.setItem("product_id", id);
     this.getDetailProduct(id);
+    this.getStar();
     this.postProductDetail = this.postProductDetail.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
   }
   getDetailProduct(id) {
+    let product_id = localStorage.getItem("product_id");
     fetch("http://127.0.0.1:8000/api/product/detail/" + id).then((response) => {
       response.json().then((data) => {
         console.log(data);
@@ -65,8 +73,22 @@ class DetailFood extends Component {
       btnOrder: true,
     });
   }
+  getStar() {
+    let product_id = localStorage.getItem("product_id");
+    fetch("http://127.0.0.1:8000/api/getStar/" + product_id)
+    .then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          stars: data,
+        });
+      });
+    });
+  }
   render() {
     let detailp = this.state.detailProduct;
+    let star = this.state.stars;
+
     return (
       <React.Fragment>
         <Header />
@@ -159,14 +181,26 @@ class DetailFood extends Component {
                       <div className="detail-content">
                         <p>Mô tả: {detailp.description}</p>
                         <br />
-                        <p>Giá: {detailp.price}đ</p>
+                        <p>Giá: {detailp.price} đ</p>
                         <br />
                         <p>Giảm giá: {detailp.discount}</p>
                         <br />
                         <div className="flex">
-                          <i class="far fa-star"></i>&ensp;
-                          <i class="far fa-star"></i>&ensp;
-                          <i class="far fa-star"></i>
+                        
+                          {/* {this.state.stars.map((star) => ( */}
+                            <div>
+                              <p>Đánh giá: {star} / 5</p>
+                              {/* <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i> */}
+                              <Box component="fieldset" mb={3} borderColor="transparent">
+                                {/* <Typography component="legend">Read only</Typography> */}
+                                <Rating name="half-rating-read" value={star} precision={0.5} readOnly />
+                              </Box>
+                            </div>
+                          {/* ))} */}
                         </div>
                       </div>
                     </div>

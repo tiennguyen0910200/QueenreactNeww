@@ -145,8 +145,9 @@ class Header extends Component {
                                                 <b>{checkname}</b>
                                             </a>
                                             <div className="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                                                <a className="dropdown-item" href="#" onClick={this.onLogout}><Link to="/home/login">Đăng xuất</Link></a>
+                                                <a className="dropdown-item" href="#" ><Link to="/home/user-manageOrder">Xem lại đơn hàng</Link></a>
                                                 <a className="dropdown-item" href="#"><Link to="/home/register">Đăng ký</Link></a>
+                                                <a className="dropdown-item" href="#" onClick={this.onLogout}><Link to="/home/login">Đăng xuất</Link></a>
                                                 <a className="dropdown-item" href="#"><Link to="/">Quay lại</Link></a>
                                             </div>
                                         </Link>

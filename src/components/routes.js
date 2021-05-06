@@ -14,6 +14,7 @@ import RegisterAuthen from './RegisterAuthen.js';
 import Checkout from './user/cart/Checkout.js';
 import Payment from './user/cart/Payment.js';
 import RegisterCheck from './RegisterCheck.js';
+import ManageOrder from './user/cart/ManageOrder.js';
 
 const routes = [
 	{
@@ -85,6 +86,11 @@ const routes = [
 		path: '/home/checkout',
 		exact: true,
 		main: () => <Checkout />
+	},
+	{
+		path: '/home/user-manageOrder',
+		exact: true,
+		main: () => <ManageOrder />
 	},
 	{
 		path: '/home/payment',
