@@ -4,6 +4,16 @@ import Footer from '../footer/Footer';
 import '../contact/Contactbig.css';
 import '../contact/Contactsmall.css';
 class Contact extends Component{
+
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    alert('Tin nhắn của bạn đã được gửi đến chúng tôi');
+    event.preventDefault();
+  }
   render() {
     return (
       <React.Fragment>
@@ -62,10 +72,13 @@ class Contact extends Component{
               <h4>Email</h4>
               <input placeholder="nguyenvana@gmail.com"></input>
               <h4>Lời nhắn</h4>
+              <form onSubmit={this.handleSubmit}>
               <textarea className="text-area" placeholder="Bạn có lời nhắn gì đến chúng tôi?"></textarea>
               <button className="button-contact">
                   <h4>Gửi</h4>
               </button>
+              </form>
+              
             </div>
           </div>
         </div>
@@ -79,3 +92,4 @@ class Contact extends Component{
   }
 }
 export default Contact;
+

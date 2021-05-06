@@ -10,6 +10,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
+      allvendor: [],
       vendor: [],
       foodRestaurant: [],
       speakerRestaurant: [],
@@ -20,6 +21,7 @@ class Home extends Component {
       // newVendor: [],
       // topVendor: [],
     };
+    this.getAllVendor();
     this.getVendor();
     this.getFoodRestaurant();
     this.getSpeakerRestaurant();
@@ -29,6 +31,16 @@ class Home extends Component {
     // this.getService();
     // this.getNewVendor();
     // this.getTopVendor();
+  }
+  getAllVendor() {
+    fetch("http://127.0.0.1:8000/api/allvendor").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          allvendor: data,
+        });
+      });
+    });
   }
 
   getVendor() {
@@ -111,6 +123,7 @@ class Home extends Component {
     }
   };
   render() {
+    console.log("home", this.state.vendor);
     return (
       <React.Fragment>
         <Header />
@@ -119,6 +132,19 @@ class Home extends Component {
           <img src="./img/main4.PNG" width="100%" height="auto" alt="" />
 
           <div class="container">
+            <div className="search">
+              <form onSubmit={this.onAddComment}>
+                <select class="form-control" id="sel1" onChange={this.handleSearch}>
+                  <option selected>Chọn nhà hàng bạn muốn tìm kiếm!</option>
+                  {this.state.allvendor.map((vendor) => (
+                   <option >{vendor.name}</option>                   
+                  ))}
+                </select>
+                <button type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </form>
+            </div>
             <div class="jumbotron text-center">
               <h1>QUEEN PARTY</h1>
               <p>
@@ -142,9 +168,6 @@ class Home extends Component {
                         src={"http://127.0.0.1:8000/storage/" + item.avatar}
                       />
                     </Link>
-                    {this.state.valueSearch && (
-                      <h2 className="name_vendor">{item.fullname}</h2>
-                    )}
                   </div>
                 </div>
               ))}
@@ -204,7 +227,10 @@ class Home extends Component {
               {this.state.cakeRestaurant.map((cake) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
-                    <img src={"http://127.0.0.1:8000/storage/" + cake.avatar} class="image" />
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + cake.avatar}
+                      class="image"
+                    />
                     <Link to={"/home/vendor/detail/" + cake.id}>
                       {" "}
                       <div class="middle">

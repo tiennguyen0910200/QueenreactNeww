@@ -9,8 +9,6 @@ class Header extends Component {
     this.state = {
       allvendor: [],
     }
-   
-
     //   this.state = {
     //     account: props.userData,
     //     isLoggedIn: props.userIsLoggedIn
@@ -27,6 +25,7 @@ class Header extends Component {
     //   this.setState(appState);
     //   this.props.history.push('/home/login');
     // }
+    this.getAllVendor();
     let checkLogin = localStorage.getItem("idUser");
     console.log(checkLogin);
 
@@ -35,7 +34,6 @@ class Header extends Component {
       checkLogin: check,
     };
     this.onLogout = this.onLogout.bind(this);
-    this.getAllVendor();
   }
   getAllVendor() {
     fetch("http://127.0.0.1:8000/api/allvendor").then((response) => {
@@ -47,6 +45,7 @@ class Header extends Component {
       });
     });
   }
+  
   onLogout() {
     localStorage.removeItem("idUser");
     this.setState({
@@ -54,14 +53,17 @@ class Header extends Component {
     });
   }
   // 1.3
-  render() {
+  render(props) {
+    //console.log("list",this.state.allvendor);
     const aStyle = {
       cursor: "pointer",
     };
     let checkname = localStorage.getItem("nameUser");
     console.log(checkname);
     return (
+      
       <div>
+        
         <nav className="mb-1 navbar navbar-expand-lg navbar-dark default-color">
           <Link to="/">
             <a className="navbar-brand">Giới thiệu</a>
@@ -88,9 +90,9 @@ class Header extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link to="/home/service"><a className="nav-link" href="#">
                   Dịch vụ
-                </a>
+                </a></Link>
               </li>
               <li className="nav-item">
                 <Link to="/home/contact">
@@ -144,36 +146,36 @@ class Header extends Component {
             </ul>
           </div>
         </nav>
-        <div className="header_bottom">
+        {/* <div className="header_bottom">
           <div className="container">
             <div className="row">
               <div className="col-sm-6">
-                <img
+              <Link to="/"><img
                   src="https://www.linkpicture.com/q/logo2_6.png"
                   alt=""
                   width="100px"
                   height="100px"
                   className="logo"
                 />
+                </Link>
               </div>
               <div className="col-sm-6">
                 <div className="search">               
                   <select class="form-control" id="sel1">
-                    <option selected>Chọn nhà hàng bạn muốn tìm kiếm!</option> 
-                    {/* {this.state.allvendor.map((vendor) => (
-                      <option>{vendor.name}</option>              
-                    ))}
-             */}
-                    
+                    <option selected>Chọn nhà hàng bạn muốn tìm kiếm!</option>                                     
+                    {this.state.allvendor.map((vendor) => (                      
+                      <option>{vendor.name}</option>                                                                             
+                    ))} 
+                                       
                   </select>
                   <button type="submit">
                     <i class="fa fa-search"></i>
                   </button>
-                  </div> 
+                </div> 
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

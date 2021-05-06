@@ -12,15 +12,12 @@
   .nav-link:hover a {
     text-decoration: none;
   }
-  .header_bottom{
+  .header_bottom {
     background-color: #ededed;
     height: 100px;
   }
-  .search{
-    display: flex;
-    padding-top: 30px;
-  }
-  .search button{
+
+  .search button {
     border: 1px solid #f0f0f0;
     background-color: white;
     border-radius: 5px;

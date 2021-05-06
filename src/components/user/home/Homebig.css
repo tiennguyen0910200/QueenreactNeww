@@ -50,12 +50,19 @@
     width: 70%;
   }
   .img-container img {
-    width: 435px;
-    height: 280px;
+    width: 395px;
+    height: 250px;
     transition: all 1s;
     /** Tạo độ mượt **/
   }
-
+  .search {
+    padding-bottom: 30px;
+    width: 40%;
+    margin: auto;
+  }
+  .search form {
+    display: flex;
+  }
   .img-container:hover img {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
