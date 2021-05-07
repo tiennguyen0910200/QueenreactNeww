@@ -5,7 +5,7 @@ import "../home/Homebig.css";
 import "../home/Homesmall.css";
 import { get } from "../../services/api.service";
 import Search from "../search/Search";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 class Home extends Component {
   constructor() {
     super();
@@ -16,6 +16,7 @@ class Home extends Component {
       speakerRestaurant: [],
       cakeRestaurant: [],
       decorRestaurant: [],
+      value: ''
 
       // service: [],
       // newVendor: [],
@@ -27,6 +28,8 @@ class Home extends Component {
     this.getSpeakerRestaurant();
     this.getCakeRestaurant();
     this.getDeCorRestaurant();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     // this.getService();
     // this.getNewVendor();
@@ -93,35 +96,19 @@ class Home extends Component {
       });
     });
   }
-  handleSearch = (search) => {
-    var vendorpro = [];
-    let oldVendor = JSON.parse(localStorage.getItem("vendor"));
-    if (!oldVendor) {
-      oldVendor = [];
-    }
-    if (search.length <= 0 || search === "") {
-      this.setState({
-        vendor: oldVendor,
-        valueSearch: search,
-      });
-    } else {
-      let searchValue = search.toLowerCase();
-      console.log("searchValue");
-      console.log(searchValue);
-      for (var i = 0; i < oldVendor.length; i++) {
-        // console.log(oldVendor[i].category.name.toLowerCase().indexOf(searchValue)!= -1)
-        if (oldVendor[i].fullname.toLowerCase().indexOf(searchValue) != -1) {
-          vendorpro.push(oldVendor[i]);
-          // laconsole.log("ccg");
-          console.log(vendorpro);
-        }
-      }
-      this.setState({
-        vendor: vendorpro,
-        valueSearch: search,
-      });
-    }
-  };
+  // handleChange(event){
+  //   this.setState({id: event.target.value});
+  //   console.log(event);
+  // };
+  handleChange(id) {
+    this.setState({value: id.target.value});
+
+  }
+
+  handleSubmit(id) {
+    id.preventDefault();
+       this.props.history.push("/home/vendor/detail/" + this.state.value);    
+  }
   render() {
     console.log("home", this.state.vendor);
     return (
@@ -133,16 +120,15 @@ class Home extends Component {
 
           <div class="container">
             <div className="search">
-              <form onSubmit={this.onAddComment}>
-                <select class="form-control" id="sel1" onChange={this.handleSearch}>
+              <form onSubmit={this.handleSubmit}>
+                <select class="form-control" id="sel1" value={this.state.value} onChange={this.handleChange}>
                   <option selected>Chọn nhà hàng bạn muốn tìm kiếm!</option>
                   {this.state.allvendor.map((vendor) => (
-                   <option >{vendor.name}</option>                   
+                   <option value={vendor.id} >{vendor.name}</option>                   
                   ))}
                 </select>
-                <button type="submit">
-                  <i class="fa fa-search"></i>
-                </button>
+                <button type="submit" value="Submit">Search</button>
+                
               </form>
             </div>
             <div class="jumbotron text-center">
@@ -273,4 +259,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
