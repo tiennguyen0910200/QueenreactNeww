@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import "./ManageOrder.css";
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router';
+import HoverRating from './Review';
 class ManageOrder extends Component{
     constructor(props) {
         super(props);
+        let checkOrder = localStorage.getItem('order_list');
+        console.log(checkOrder);
+
+        // let check = checkOrder ? "on" : "off";
+        // this.state = {
+        //     checkOrder: check
+
+        // }
         this.state = {
             carts: [],
             total: [],
@@ -17,6 +26,8 @@ class ManageOrder extends Component{
         this.getOrderWithUser();
         this.getTotalPrice();
         this.getTotalProduct();
+        // this.onCancelOrder();
+        this.onReviewSubmit = this.onReviewSubmit.bind(this);
 
     }
     getAllProducts() {
@@ -64,7 +75,48 @@ class ManageOrder extends Component{
                 });
             });
     }
-    
+    onCancelOrder() {
+        fetch("http://127.0.0.1:8000/api/order/cancel", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(response => {
+                response.json().then((data) => {
+                    console.log(data);
+                    alert('Đơn hàng cua bạn đã bị hủy');
+                });
+            });
+    }
+    onReviewSubmit(event) {
+        event.preventDefault();
+        let user_id = localStorage.getItem("idUser");
+        let product_id = localStorage.getItem("product_id");
+        // var id = this.props.match.params.id;
+
+        let quantity = event.target["quantity"].value;
+        let review = {
+            quantity: quantity,
+            user_id: user_id,
+            product_id: product_id
+        }
+        let postInJson = JSON.stringify(review);
+        fetch("http://127.0.0.1:8000/api/product/review", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: postInJson
+        })
+            .then(response => {
+                response.json().then((review) => {
+                    console.log(review);
+                    alert('Cảm ơn bạn đã đánh giá sản phẩm');
+                    this.props.history.push('/home/user-manageOrder');
+                });
+            });
+    }
     render(){
         let checkname = localStorage.getItem('nameUser');
         let totalProduct = this.state.total;
@@ -118,13 +170,15 @@ class ManageOrder extends Component{
                                 <div className="order-list">
                                     <div className="order-list-tabs">
                                         <span className="order-tab-item order-tab-item-active">Gần đây</span>
-                                        <span className="order-tab-item ">Đang chờ</span>
+                                        <span className="order-tab-item ">Đã hủy</span>
                                         <span className="order-tab-item ">Đã giao</span>
                                         <span className="order-tab-item ">Đánh giá</span>
                                     </div>
                                     <div className="orders">
                                         <div className="order">
                                             <div className="order-info">
+                                                {/* {this.state.checkOrder == null ?
+                                                <p className="text info desc">Bạn chưa xác nhận đơn hàng <Link to="/home/checkout">Đặt hàng</Link></p> : */}
                                                 <div className="pull-left">
                                                     {this.state.orderList.map((orderlist, index) => 
                                                         <div>
@@ -135,6 +189,20 @@ class ManageOrder extends Component{
                                                         </div>
                                                     )}
                                                 </div>
+                                                {/* } */}
+                                                {/* {this.state.checkOrder != null ?
+                                                <p className="text info desc">Bạn chưa xác nhận đơn hàng <Link to="/home/checkout">Đặt hàng</Link></p> :
+                                                <div className="pull-left">
+                                                    {this.state.orderList.map((orderlist, index) => 
+                                                        <div>
+                                                            <div className="info-order-left-text">Mã ĐH: 
+                                                                <a className="link"> {orderlist.id}4575685837</a>
+                                                            </div>
+                                                            <p className="text info desc">Đặt hàng ngày {orderlist.order_time}</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                } */}
                                                 <div className="pull-cont" />
                                                     <a className="pull-right link manage" style={{color: 'rgb(26, 156, 183)'}}>Thêm món</a>
                                                     <Link to="/">
@@ -152,7 +220,54 @@ class ManageOrder extends Component{
                                                                         <td >{cart.ProductName}</td>
                                                                         <td >{cart.price} <span>VNĐ</span></td>
                                                                         <td style={{fontWeight: 700}}>{cart.VendorName}</td>
-                                                                        <td ><button className="button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                                        <td ><button style={{float: "right"}} type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Đánh giá</button></td>
+                                                                        {/* <!-- Modal --> */}
+                                                                            <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                                <div className="modal-dialog modal-dialog-centered" role="document">
+                                                                                    <div className="modal-content">
+                                                                                    <div className="modal-header">
+                                                                                        <h5 className="modal-title" id="exampleModalCenterTitle" style={{display: "flex", justifyContent: "space-around"}}>
+                                                                                            <img style={{width: "70px"}} src={'http://127.0.0.1:8000/storage/' + cart.picture} />
+                                                                                            <div>
+                                                                                                <h4 style={{fontStyle: "italic", marginLeft: "10px"}}>{cart.ProductName}</h4>
+                                                                                                <h6 style={{fontStyle: "italic", marginLeft: "10px"}}>{cart.VendorName}</h6>
+                                                                                            </div>
+                                                                                            </h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div className="modal-body">
+                                                                                        <div style={{textAlign: "center"}}>
+                                                                                            <h4>Vui lòng đánh giá</h4>
+                                                                                            <div style={{marginLeft: "140px"}}>
+                                                                                                <div className="stars" id="review">
+                                                                                                    <form action=""> 
+                                                                                                        <input className="star star-5" id="star-5" type="radio" name="star" /> 
+                                                                                                        <label className="star star-5" for="star-5"></label> 
+                                                                                                        <input className="star star-4" id="star-4" type="radio" name="star" /> 
+                                                                                                        <label className="star star-4" for="star-4"></label> 
+                                                                                                        <input className="star star-3" id="star-3" type="radio" name="star" /> 
+                                                                                                        <label className="star star-3" for="star-3"></label>
+                                                                                                        <input className="star star-2" id="star-2" type="radio" name="star" />
+                                                                                                        <label className="star star-2" for="star-2"></label>
+                                                                                                        <input className="star star-1" id="star-1" type="radio" name="star" /> 
+                                                                                                        <label className="star star-1" for="star-1"></label> 
+                                                                                                        
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                                                                                        <form method="POST" onSubmit={this.onReviewSubmit} action="">
+                                                                                            <button type="submit" className="btn btn-primary">Gửi đánh giá</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                     </tr>
                                                                 </table>
 
@@ -160,6 +275,35 @@ class ManageOrder extends Component{
                                                         </div>
                                                     )}
                                             </div>
+                                            <div style={{borderBottom: "1px solid #dadada"}}>
+                                                <div class="product-flex">
+                                                    <div>
+                                                        <strong>Số đơn hàng</strong>
+                                                    </div>
+                                                    <div>
+                                                        <strong>
+                                                            <b>
+                                                                {totals} <span>Đơn</span>
+                                                            </b>
+                                                        </strong>
+                                                    </div>
+                                                </div><br />
+                                                <div class="product-flex">
+                                                    <div>
+                                                        <strong>Tổng đơn hàng</strong>
+                                                    </div>
+                                                    <div>{this.state.totalPrice.map((total, index) =>
+                                                        <strong>
+                                                            <b>
+                                                                {total.sumPrice} <span>VNĐ</span>
+                                                            </b>
+                                                        </strong>)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <form method="POST" onSubmit={this.onCancelOrder} action="">
+                                                <button style={{float: "right", marginTop: "20px"}} type="submit" className="btn btn-danger" >Hủy đơn</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -172,4 +316,5 @@ class ManageOrder extends Component{
         )
     }
 }
+
 export default withRouter(ManageOrder);

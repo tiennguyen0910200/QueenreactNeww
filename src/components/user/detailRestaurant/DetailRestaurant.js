@@ -176,7 +176,7 @@ class DetailRestaurant extends Component {
                             </div>
                             ))}
                             <br />
-                            <RatingStars></RatingStars>
+                            {/* <RatingStars></RatingStars> */}
                             <form onSubmit={this.onAddComment}>
                             <input
                                 placeholder="Viết đánh giá..."
