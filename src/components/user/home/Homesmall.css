@@ -1,88 +1,72 @@
 @media only screen and (max-width: 500px) {
-  .container {
-    margin: auto;
-    width: 100%;
-  }
-  .border h4 {
-    font-size: xx-large;
-    text-align: center;
-  }
-  .search {
-    text-align: center;
-  }
-  .cart_content {
-    margin: 5px 5px;
-    position: relative;
-    width: 210px;
-    height: 250px;
-    background: #fff;
-    overflow: hidden;
-  }
-  .queenparty {
+  .text-center h1 {
     font-family: cursive;
-    text-align: center;
   }
-  .gioithieu {
-    text-align: center;
-    font-size: medium;
-  }
-  .vendor {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 10px;
-    width: 700px;
-  }
-
-  .avatar {
-    width: 330px;
-    height: 150px;
-  }
-  .slide_scroll {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    background-color: rgba(32, 32, 32, 0.2);
-  }
-
-  .slide_scroll img {
-    position: absolute;
-    /* top: calc(100% - 250px); */
-    z-index: 100;
-    width: 100%;
-    bottom: 0px;
-  }
-  .slide_text_centrer {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    /* flex-direction: column; */
-    color: white;
-  }
-  .h2_text {
-    margin-top: 40px;
-    font-size: 80px;
-    text-shadow: 0 5px 0 rgba(0, 0, 0, 0.38);
-    font-family: "Sue Ellen Francisco", cursive;
-  }
-  .img-container {
+  /* .img-container {
     height: auto;
     overflow: hidden;
     position: relative;
     width: 620px;
     margin-left: -180px;
+  } */
+  .jumbotron {
+    background-color: white;
+    padding-bottom: 0;
+  }
+  .image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: 0.5s ease;
+    backface-visibility: hidden;
+  }
+
+  .middle {
+    transition: 0.5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .text {
+    background-color: #eba28c;
+    color: black;
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+  .foodRestaurant {
+    position: relative;
+  }
+  .foodRestaurant:hover .image {
+    opacity: 0.7;
+  }
+
+  .foodRestaurant:hover .middle {
+    opacity: 1;
   }
 
   .img-container img {
-    width: 550px;
-    height: 360px;
-    transition: all 1s;
-    /** Tạo độ mượt **/
+    text-align: center;
+    width: 380px;
+    height: 280px;
   }
+  .foodRestaurant img {
+    text-align: center;
+    width: 380px;
+    height: 280px;
+  }
+  /* .row {
+    text-align: center;
+  } */
 
-  .img-container:hover img {
+  /* .img-container:hover img {
     -webkit-transform: scale(1.2);
     transform: scale(1.2);
-  }
+  }  */
   .disflex {
     display: flex;
     width: 100%;

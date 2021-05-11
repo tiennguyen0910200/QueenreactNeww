@@ -27,9 +27,13 @@
     margin-left: 20px;
     
   }
-  .infor h4 {
+  .infor h4,h6 {
     color: rgb(58, 56, 56);
     text-align: left;
+  }
+  .boss img{
+    width: 200px;
+    height: 200px;
   }
   .contact-form {
     text-align: left;

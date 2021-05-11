@@ -15,6 +15,7 @@ import RegisterAuthen from './RegisterAuthen.js';
 import Checkout from './user/cart/Checkout.js';
 import Payment from './user/cart/Payment.js';
 import RegisterCheck from './RegisterCheck.js';
+import ContactForm from './user/contact/ContactForm.js';
 
 const routes = [
 	{
