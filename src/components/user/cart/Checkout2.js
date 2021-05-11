@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import "./Checkout.css";
 import axios from 'axios';
+import ReactDOM from 'react-dom';
 import CartItem from './CartItem';
 import { withRouter } from 'react-router';
-import UserRow from './CartItem';
-import ExpenseTableRow from './CartItem';
-class Checkout extends Component {
+
+class Checkout2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,17 +13,41 @@ class Checkout extends Component {
             total: [],
             totalPrice: [],
             order: [],
-            expenses: []
+            isOrdered: false,
+            formSubmitting: false,
+            orders: {
+                name: '',
+                phone: '',
+                address: '',
+                order_time: '',
+                note: '',
+                user_id: ''
+            },
+            redirect: props.redirect,
         }
-        var id = props.match.params.id;
-        // let product_id= localStorage.getItem('product_id');
-        // this.getData(product_id);
+        // var id = props.match.params.id;
         this.getAllProducts();
         this.getTotalPrice();
         this.getTotalProduct();
         this.onOrderSubmit = this.onOrderSubmit.bind(this);
-        this.deleteItem = this.deleteItem.bind(this);
+        this.handleName = this.handleName.bind(this);
+        this.handleNumber = this.handleNumber.bind(this);
+        this.handleAddress = this.handleAddress.bind(this);
+        this.handleOrderTime = this.handleOrderTime.bind(this);
+        this.handleNote = this.handleNote.bind(this);
 
+        // this.deleteItem = this.deleteItem.bind(this);
+
+    }
+    componentWillMount() {
+        let state = localStorage["orderState"];
+        if (state) {
+            let OrderState = JSON.parse(state);
+            this.setState({ isOrder: OrderState.isOrder, orders: OrderState });
+        }
+        if (this.state.isOrdered) {
+            return this.props.history.push("/");
+        }
     }
     getAllProducts() {
         fetch("http://127.0.0.1:8000/api/cart")
@@ -58,83 +82,83 @@ class Checkout extends Component {
                 });
             });
     }
-    onOrderSubmit(event) {
-        event.preventDefault();
-        let user_id = localStorage.getItem("idUser");
-        // var id = this.props.match.params.id;
-
-        let name = event.target["name"].value;
-        let phone = event.target["phone"].value;
-        let address = event.target["address"].value;
-        let order_time = event.target["order_time"].value;
-        let note = event.target["note"].value;
-
-        let order = {
-            // id: id,
-            name: name,
-            phone: phone,
-            address: address,
-            order_time: order_time,
-            note: note,
-            user_id: user_id
-        }
-        let postInJson = JSON.stringify(order);
-        // localStorage.setItem("order_list", order.id);
-        // console.log("order_list");
-        fetch("http://127.0.0.1:8000/api/product/order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: postInJson
-        })
+    onOrderSubmit(e) {
+        e.preventDefault();
+        this.setState({ formSubmitting: true });
+        ReactDOM.findDOMNode(this).scrollIntoView();
+        let orderData = this.state.orders;
+        axios.post("http://127.0.0.1:8000/api/product/order", orderData
+            )
             .then(response => {
-                localStorage.setItem("order_list",order.name);
-                console.log("order_list");
-                // console.log(order);
-                // // window.location.reload();
-                // alert('Xác nhận đơn hàng');
-                // this.props.history.push('/home/payment');
-                response.json().then((order) => {
-                    console.log(order);
+                return response;
+            }).then(json => {
+                if (json.data.success) {
+                    let user_id = localStorage.getItem("idUser");
+                    let orderData = {
+                        id: json.data.id,
+                        name: json.data.name,
+                        phone: json.data.phone,
+                        address: json.data.address,
+                        order_time: json.data.order_time,
+                        note: json.data.note,
+                        user_id: json.data.user_id
+                    };
+                    let orderState = {
+                        isOrdered: true,
+                        orders: orderData
+                    };
+                    localStorage["orderState"] = JSON.stringify(orderState);
+                    this.setState({
+                        isOrdered: orderState.isOrdered,
+                        orders: orderState.orders,
+                    });
                     alert('Xác nhận đơn hàng');
                     this.props.history.push('/home/payment');
-                });
-            });
+                } 
+            })
+            
     }
-    deleteItem(item) {
-        return (event) => {
-          let product_id =localStorage.getItem('product_id');
-          fetch("http://127.0.0.1:8000/api/deletecart/" + item, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': product_id,
+    handleName(e) {
+        let value = e.target.value;
+        this.setState(prevState => ({
+            orders: {
+                ...prevState.orders, name: value
             }
-          }).then(response => {
-            response.json().then((data) => {
-            //   this.getData(product_id);
-            });
-          });
-        }
-      }
-      componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/expenses/')
-          .then(res => {
-            this.setState({
-              expenses: res.data
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-      }
-    
-      DataTable() {
-        return this.state.expenses.map((res, i) => {
-          return <ExpenseTableRow obj={res} key={i} />;
-        });
-      }
+        }));
+    }
+    handleNumber(e) {
+        let value = e.target.value;
+        this.setState(prevState => ({
+            orders: {
+                ...prevState.orders, phone: value
+            }
+        }));
+    }
+    // 2.5
+    handleAddress(e) {
+        let value = e.target.value;
+        this.setState(prevState => ({
+            orders: {
+                ...prevState.orders, address: value
+            }
+        }));
+    }
+    handleOrderTime(e) {
+        let value = e.target.value;
+        this.setState(prevState => ({
+            orders: {
+                ...prevState.orders, order_time: value
+            }
+        }));
+    }
+    handleNote(e) {
+        let value = e.target.value;
+        this.setState(prevState => ({
+            orders: {
+                ...prevState.orders, note: value
+            }
+        }));
+    }
     render() {
         let totalProduct = this.state.total;
         let totals = totalProduct.length;
@@ -153,9 +177,20 @@ class Checkout extends Component {
                                     </div>
                                     <h4 className="strong-titleCheck"><b> Danh sách dịch vụ </b></h4>
                                     <hr className="hr-payment" />
-                                    {/* {this.state.carts.map((cart, index) =>
+                                    {this.state.carts.map((cart, index) =>
                                         <div>
                                             <div class="product-flex">
+                                                {/* <div>
+                                                    <img className="imageCheck" src={'http://127.0.0.1:8000/storage/' + cart.picture} />
+                                                </div>
+                                                <div style={{float: "left", margin: "10px"}}>{cart.ProductName}</div>
+                                                <div style={{float: "left" , margin: "10px"}}>
+                                                    {cart.price} <span>VNĐ</span>
+                                                </div>
+                                                <div style={{float: "left", margin: "10px"}}>{cart.VendorName}</div>
+                                                <div>
+                                                    <button className="button-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                </div> */}
                                                 <table>
                                                     <tr>
                                                         <td style={{paddingLeft: "5px", }}><img className="imageCheck" src={'http://127.0.0.1:8000/storage/' + cart.picture} /></td>
@@ -169,8 +204,7 @@ class Checkout extends Component {
                                             </div>
                                             <hr className="hr-payment" />
                                         </div>
-                                    )} */}
-                                     {this.DataTable()}
+                                    )}
                                                            
                                     <div class="product-flex">
                                         <div>
@@ -218,7 +252,7 @@ class Checkout extends Component {
                                                 <div>
                                                     <input
                                                         className="form-input-checkout" id="name" type="text" name="name"
-                                                        placeholder="Tên của bạn.." required
+                                                        placeholder="Tên của bạn.." required onChange={this.handleName} 
                                                     />
                                                 </div>
                                             </div>
@@ -229,7 +263,7 @@ class Checkout extends Component {
                                                 <div>
                                                     <input
                                                         className="form-input-checkout" id="phone" name="phone" type="number"
-                                                        placeholder="Số điện thoại của bạn.." required type="number"
+                                                        placeholder="Số điện thoại của bạn.." required type="number" onChange={this.handleNumber}
                                                     />
                                                 </div>
                                             </div>
@@ -240,7 +274,7 @@ class Checkout extends Component {
                                                 <div>
                                                     <input
                                                         className="form-input-checkout" id="address" name="address" type="text"
-                                                        placeholder="Địa chỉ của bạn.." required
+                                                        placeholder="Địa chỉ của bạn.." required onChange={this.handleAddress}
                                                     />
                                                 </div>
                                             </div>
@@ -249,7 +283,7 @@ class Checkout extends Component {
                                                     <strong className="strong-titleCheck">Thời gian giao hàng  <span className="required">(*)</span></strong>
                                                 </div>
                                                 <div>
-                                                    <input className="form-input-checkout" type="date" id="order_time" name="order_time" required />
+                                                    <input className="form-input-checkout" type="date" id="order_time" name="order_time"  onChange={this.handleOrderTime} required />
                                                 </div>
                                             </div>
                                             <div>
@@ -259,7 +293,7 @@ class Checkout extends Component {
                                                 <div>
                                                     <textarea
                                                         className="form-input-checkout" id="note" name="note" type="text"
-                                                        placeholder="Ghi chú.."
+                                                        placeholder="Ghi chú.." onChange={this.handleNote}
                                                     />
                                                 </div>
                                             </div>
@@ -278,4 +312,4 @@ class Checkout extends Component {
         );
     }
 }
-export default withRouter(Checkout);
+export default Checkout2;

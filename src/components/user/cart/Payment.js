@@ -37,9 +37,19 @@ class Payment extends Component {
                 });
             });
     }
-    onPaymentAlert() {
-        alert("Đang chờ admin phê duyệt");
-        this.props.history.push('/');
+    onPaymentAlert(event) {
+        event.preventDefault();
+        fetch("http://127.0.0.1:8000/api/orderlist/delete", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // body: postInJson
+        })
+            .then(response => {
+                alert("Đang chờ admin phê duyệt");
+                this.props.history.push('/');
+            });
     }
     render() {
         let userorder = this.state.userOrder;
@@ -95,9 +105,9 @@ class Payment extends Component {
                                     </div>
                                     <div>
                                         <b>
-                                            <div className="margin">{userorder.username}</div>
+                                            <div className="margin">{userorder.name}</div>
                                             <div className="margin">{userorder.address}</div>
-                                            <div className="margin">{userorder.phone_number}</div>
+                                            <div className="margin">{userorder.phone}</div>
                                             <div className="margin">{userorder.order_time}</div>
                                             <div className="margin">{userorder.note}</div>
                                         </b>
@@ -137,7 +147,6 @@ class Payment extends Component {
                                         id="huey"
                                         name="drone"
                                         value="tindung"
-                                        checked
                                     />
               Thanh toán thẻ tín dụng
               <br />

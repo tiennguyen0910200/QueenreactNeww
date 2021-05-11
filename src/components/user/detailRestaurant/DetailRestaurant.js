@@ -5,8 +5,10 @@ import "../detailRestaurant/DetailRestaurantbig.css";
 import "../detailRestaurant/DetailRestaurantsmall.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import RatingStars from '../starRating/StarsRating';
 
 class DetailRestaurant extends Component {
+
   constructor(props) {
     super(props);
     let user = localStorage.getItem("user_id");
@@ -17,7 +19,7 @@ class DetailRestaurant extends Component {
       btnComment: false,
     };
     var id = props.match.params.id;
-    localStorage.setItem("id_vendor", id);
+    localStorage.setItem("vendor_id", id);
     //localStorage.setItem("id_product", id);
     this.getDetail(id);
     this.getProduct(id);
@@ -31,21 +33,19 @@ class DetailRestaurant extends Component {
         console.log(data);
         this.setState({
           detail: data,
-        });
-      });
-    });
-  }
-  getProduct(id) {
-    fetch("http://127.0.0.1:8000/api/getproduct/" + id).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          product: data,
-        });
-      });
-    });
-  }
 
+        });
+    }
+    getProduct(id) {
+        fetch("http://127.0.0.1:8000/api/getproduct/" + id).then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+                this.setState({
+                    product: data,
+                });
+            });
+        });
+    }
   getAllComment(id) {
     fetch("http://127.0.0.1:8000/api/totalComment/" + id).then((response) => {
       console.log(response);
@@ -190,15 +190,13 @@ class DetailRestaurant extends Component {
                       <button type="submit">Đăng</button>
                     </form>
                   </div>
+
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </React.Fragment>
+                </div>
+                <Footer />
+            </React.Fragment>
     );
-  }
+}
 }
 
 export default withRouter(DetailRestaurant);

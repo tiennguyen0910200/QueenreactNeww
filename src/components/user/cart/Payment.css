@@ -84,6 +84,11 @@
   font-size: 40px;
   color: #eaa28b;
 }
+.flex-payment {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+}
 
 
 @media only screen and (max-width: 500px) {
@@ -93,7 +98,7 @@
   
   .flex-payment {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-between;
   }
   

@@ -5,10 +5,14 @@ import "../detailFood/DetailFoodbig.css";
 import "../detailFood/DetailFoodsmall.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 class DetailFood extends Component {
   constructor(props) {
     super(props);
     let user = localStorage.getItem("idUser");
+    
     this.state = {
       detailProduct: [],
       getdataComment: [],
@@ -19,18 +23,22 @@ class DetailFood extends Component {
       login: user,
       btnComment: false,
       //cart:[]
+      stars: []
     };
     var id = props.match.params.id;
+
     localStorage.setItem("id_product", id);
     // localStorage.setItem("id_vendor", id);
     this.getDetailProduct(id);
     this.getAllComment(id);
     this.onAddComment = this.onAddComment.bind(this);
     this.buttonComment = this.buttonComment.bind(this);
+
     this.postProductDetail = this.postProductDetail.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
   }
   getDetailProduct(id) {
+    let product_id = localStorage.getItem("product_id");
     fetch("http://127.0.0.1:8000/api/product/detail/" + id).then((response) => {
       response.json().then((data) => {
         console.log(data);
@@ -100,7 +108,7 @@ class DetailFood extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let user_id = localStorage.getItem("idUser");
-      let vendor_id = localStorage.getItem("id_vendor");
+      let vendor_id = localStorage.getItem("vendor_id");
       var id = this.props.match.params.id;
       let orders = {
         product_id: id,
@@ -128,8 +136,22 @@ class DetailFood extends Component {
       btnOrder: true,
     });
   }
+  getStar() {
+    let product_id = localStorage.getItem("product_id");
+    fetch("http://127.0.0.1:8000/api/getStar/" + product_id)
+    .then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          stars: data,
+        });
+      });
+    });
+  }
   render() {
     let detailp = this.state.detailProduct;
+    let star = this.state.stars;
+
     return (
       <React.Fragment>
         <Header />
@@ -144,17 +166,51 @@ class DetailFood extends Component {
                   />
                 </div>
               </div>
-              <div class="col-sm-6">
-                <h4>{detailp.name}</h4>
-                <br />
-                <p>Mô tả: {detailp.description}</p>
-                <p>Giá: {detailp.price}đ</p>
-                <p>Giảm giá: {detailp.discount}</p>
-                <div className="flex">
-                  <i class="far fa-star"></i>&ensp;
-                  <i class="far fa-star"></i>&ensp;
-                  <i class="far fa-star"></i>
-                </div>
+
+              <div class="col-sm-8">
+                <div className="detail_order">
+                  <h1>{detailp.name}</h1>
+                  <hr />
+                  <div className="flex">
+                    <div className="detail_order_name">
+                      <div>
+                        <img
+                          src={
+                            "http://127.0.0.1:8000/storage/" + detailp.picture
+                          }
+                          alt=""
+                          width="350px"
+                          height="250px"
+                        />
+                      </div>
+                      <div className="detail-content">
+                        <p>Mô tả: {detailp.description}</p>
+                        <br />
+                        <p>Giá: {detailp.price} đ</p>
+                        <br />
+                        <p>Giảm giá: {detailp.discount}</p>
+                        <br />
+                        <div className="flex">
+                        
+                          {/* {this.state.stars.map((star) => ( */}
+                            <div>
+                              <p>Đánh giá: {star} / 5</p>
+                              {/* <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i>&ensp;
+                              <i class="far fa-star"></i> */}
+                              <Box component="fieldset" mb={3} borderColor="transparent">
+                                {/* <Typography component="legend">Read only</Typography> */}
+                                <Rating name="half-rating-read" value={star} precision={0.5} readOnly />
+                              </Box>
+                            </div>
+                          {/* ))} */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
 
                 <div className="detail-button">
                   <button onClick={this.myFunction}>

@@ -3,10 +3,11 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import "../home/Homebig.css";
 import "../home/Homesmall.css";
-import { get } from "../../services/api.service";
+import {get } from "../../services/api.service";
 import Search from "../search/Search";
 import { Link,withRouter } from "react-router-dom";
 class Home extends Component {
+
   constructor() {
     super();
     this.state = {
@@ -46,53 +47,56 @@ class Home extends Component {
     });
   }
 
-  getVendor() {
-    fetch("http://127.0.0.1:8000/api/vendor").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          vendor: data,
+    getVendor() {
+        fetch("http://127.0.0.1:8000/api/vendor").then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+                this.setState({
+                    vendor: data,
+                });
+            });
         });
-      });
-    });
-  }
-  getFoodRestaurant() {
-    fetch("http://127.0.0.1:8000/api/foodrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          foodRestaurant: data,
+    }
+    getFoodRestaurant() {
+        fetch("http://127.0.0.1:8000/api/foodrtr").then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+                this.setState({
+                    foodRestaurant: data,
+                });
+            });
         });
-      });
-    });
-  }
-  getSpeakerRestaurant() {
-    fetch("http://127.0.0.1:8000/api/speakerrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          speakerRestaurant: data,
+    }
+    getSpeakerRestaurant() {
+        fetch("http://127.0.0.1:8000/api/speakerrtr").then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+                this.setState({
+                    speakerRestaurant: data,
+                });
+            });
         });
-      });
-    });
-  }
-  getCakeRestaurant() {
-    fetch("http://127.0.0.1:8000/api/cakertr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          cakeRestaurant: data,
+    }
+    getCakeRestaurant() {
+        fetch("http://127.0.0.1:8000/api/cakertr").then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+                this.setState({
+                    cakeRestaurant: data,
+                });
+            });
         });
-      });
-    });
-  }
-  getDeCorRestaurant() {
-    fetch("http://127.0.0.1:8000/api/decorrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          decorRestaurant: data,
+    }
+    getDeCorRestaurant() {
+        fetch("http://127.0.0.1:8000/api/decorrtr").then((response) => {
+            response.json().then((data) => {
+                console.log(data);
+                this.setState({
+                    decorRestaurant: data,
+                });
+            });
         });
+
       });
     });
   }
@@ -155,11 +159,9 @@ class Home extends Component {
                       />
                     </Link>
                   </div>
+
                 </div>
-              ))}
-            </div>
-            <hr />
-          </div>
+
 
           <div class="container">
             <h3 style={{ textAlign: "center" }}>THỨC ĂN</h3>
@@ -248,15 +250,15 @@ class Home extends Component {
                     </Link>
                     <p>{decor.name}</p>
                   </div>
+
                 </div>
-              ))}
             </div>
-          </div>
-        </div>
-        <Footer />
-      </React.Fragment>
-    );
-  }
+            <Footer />
+        </React.Fragment>
+        );
+    }
 }
 
+
 export default withRouter(Home);
+

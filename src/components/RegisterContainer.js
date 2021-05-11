@@ -173,8 +173,11 @@ class RegisterContainer extends Component {
         // ));
         return (
             <div className="khungRegisUser">
-                <h1 className="title"> Đăng kí </h1>
-                <hr className="hr-Register" />
+                <h1 className="title-Login"> Đăng ký </h1>
+                    <hr className="hr-Login" />
+                    <div className="logo-login">
+                        <img className="img-logo" src="https://www.linkpicture.com/q/logo2_6.png" />
+                    </div>
                 <br />
                 <form onSubmit={this.handleSubmit}>
                     <div>

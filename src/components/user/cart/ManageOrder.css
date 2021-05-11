@@ -1,0 +1,215 @@
+.lzd-playground {
+    width: 100%;
+    min-width: 1188px;
+    min-height: 474px;
+    position: relative;
+    padding-bottom: 40px;
+    padding-top: 50px;
+}
+.lzd-playground-main {
+    position: relative;
+    width: 1188px;
+    min-width: 1188px;
+    margin: 0 auto;
+}
+.lzd-playground-nav {
+    position: absolute;
+    background: #eff0f4;
+    width: 200px;
+    height: 438px;
+    padding-top: 16px;
+}
+.lzd-playground-nav .member-info {
+    font-family: Roboto-Regular;
+    font-size: 20px;
+    /* line-height: 22px; */
+    /* color: #424242; */
+    letter-spacing: 0;
+}
+.lzd-playground-nav .nav-container {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    font-family: Roboto-Regular;
+    font-size: 20px;
+    color: #424242;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+.lzd-playground-nav .nav-container .item {
+    margin: 16px 0 0;
+}
+.lzd-playground-nav .nav-container .item>a {
+    text-decoration: none;
+    color: #424242;
+    font-family: Roboto-Medium;
+}
+.lzd-playground-nav .nav-container .item .item-container {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 16px;
+}
+.lzd-playground-right {
+    position: relative;
+    margin-left: 100px;
+}
+.lzd-playground-right .breadcrumb {
+    height: 60px;
+    line-height: 60px;
+    font-family: Roboto-Regular;
+    font-size: 13px;
+    color: #5d5d5d;
+    letter-spacing: .09px;
+}
+.lzd-playground-right .breadcrumb a {
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 400;
+    color: #424242;
+}
+.lzd-playground-right .container {
+    width: 988px;
+    margin-top: 40px;
+    margin-left: -15px;
+}
+.order-list {
+    width: 988px;
+}
+.order-list .order-list-tabs {
+    height: 28px;
+    border-bottom: 2px solid #979797;
+    margin-bottom: 13px;
+}
+.order-list .order-list-tabs .order-tab-item-active, .order-list .order-list-tabs .order-tab-item:hover {
+    border-bottom: 3px solid #ed9e90;
+}
+.order-list .order-list-tabs .order-tab-item {
+    display: inline-block;
+    font-size: 17px;
+    height: 29px;
+    line-height: 29px;
+    color: #5d5d5d;
+    padding: 0 20px;
+}
+.order {
+    margin-top: 12px;
+    padding-bottom: 24px;
+    background-color: #fff;
+}
+.order-info {
+    padding: 8px 12px;
+    min-height: 50px;
+    border-bottom: 1px solid #dadada;
+    display: flex;
+}
+.order-info .pull-left, .order-info .pull-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.order-info .pull-cont {
+    flex: 1;
+    margin: 0 30px;
+    text-align: right;
+}
+.order-info .pull-left, .order-info .pull-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.clear {
+    clear: both;
+}
+.order-item {
+    min-height: 80px;
+    margin: 24px 0px 24px 36px;
+    border-bottom: 1px solid #dadada;
+}
+.order-item .item-pic {
+    float: left;
+}
+.order-item .item-main-mini {
+    width: 280px;
+}
+.order-item .item-quantity {
+    font-size: 14px;
+    float: left;
+    width: 64px;
+    min-height: 80px;
+    text-align: left;
+}
+.order-item .item-capsule {
+    width: 204px;
+    text-align: center;
+}
+.order-item .item-status {
+    float: left;
+    min-height: 80px;
+    text-align: left;
+}
+.order-item .item-info {
+    float: right;
+    min-height: 80px;
+    text-align: right;
+    max-width: 204px;
+}
+.imageOrder{
+    width: 130px;
+    height: 100px;
+}
+.product-flex-order {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    /* border-bottom: 1px solid gray; */
+    margin-left: -35px;
+    background: #fafafa;
+    border-radius: 7px;
+}
+.product-flex-order td{
+    width: 250px;
+}
+div.stars {
+    width: 270px;
+    display: inline-block
+}
+
+.mt-200 {
+    margin-top: 200px
+}
+
+input.star {
+    display: none
+}
+
+label.star {
+    float: right;
+    padding: 10px;
+    font-size: 36px;
+    color: #4A148C;
+    transition: all .2s
+}
+
+input.star:checked~label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s
+}
+
+input.star-5:checked~label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952
+}
+
+input.star-1:checked~label.star:before {
+    color: #F62
+}
+
+label.star:hover {
+    transform: rotate(-15deg) scale(1.3)
+}
+
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome
+}

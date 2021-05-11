@@ -3,7 +3,7 @@
     border: ridge;
     width: 650px;
     border-color: #eaa28b;
-    height: 700px;
+    height: auto;
     margin-left: 600px;
     margin-top: 100px;
 }
@@ -62,13 +62,14 @@
 
 @media only screen and (max-width: 500px) {
     .khungRegisUser {
-        width: 300px;
+        width: 425px;
         clear: both;
         margin-left: 55px;
-        height: 540px;
+        height: auto;
+        margin: 50px 40px 40px 40px;
     }
     .form-input-registerUser {
-        width: 270px;
+        width: 390px;
     }
     .hr-Register {
         border-color: white;
@@ -77,7 +78,7 @@
     }
     .btn-RegisterUser {
         margin-left: 15px;
-        width: 270px;
+        width: 390px;
     }
     .title {
         margin-top: 1px;

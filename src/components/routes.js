@@ -9,13 +9,13 @@ import Restaurant from './user/restaurant/Restaurant.js';
 import Plan from './user/plan/Plan.js';
 import Service from './user/service/Service.js';
 import Search from './user/search/Search.js';
-import Login from './Login';
 import LoginAuthen from './LoginAuthen.js';
 import RegisterAuthen from './RegisterAuthen.js';
 import Checkout from './user/cart/Checkout.js';
 import Payment from './user/cart/Payment.js';
-import RegisterCheck from './RegisterCheck.js';
-import ContactForm from './user/contact/ContactForm.js';
+
+import ManageOrder from './user/cart/ManageOrder.js';
+
 
 const routes = [
 	{
@@ -28,11 +28,6 @@ const routes = [
 		path: '/home/login',
 		exact: true,
 		main: ({ history }) => <LoginAuthen history={history} />
-	},
-	{
-		path: '/home/registerCheck',
-		exact: true,
-		main: ({ history }) => <RegisterCheck history={history} />
 	},
 	{
 		path: '/home/register',
@@ -87,6 +82,11 @@ const routes = [
 		path: '/home/checkout',
 		exact: true,
 		main: () => <Checkout />
+	},
+	{
+		path: '/home/user-manageOrder',
+		exact: true,
+		main: () => <ManageOrder />
 	},
 	{
 		path: '/home/payment',
