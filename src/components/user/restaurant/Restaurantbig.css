@@ -113,8 +113,19 @@
   .restaurantpage {
     margin-left: 21%;
   }
+
   .allfoodRestaurant img {
     width: 250px;
     height: 200px;
+  }
+  .allfoodRestaurant {
+    position: relative;
+  }
+  .allfoodRestaurant:hover .image {
+    opacity: 0.7;
+  }
+
+  .allfoodRestaurant:hover .middle {
+    opacity: 1;
   }
 }

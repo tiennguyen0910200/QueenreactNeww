@@ -8,6 +8,10 @@
     margin-left: 20%;
     margin-top: 3%;
   }
+  .detail_rtr img{
+    width: 550px;
+    height: 300px;
+  }
   .detail_order {
     border: 1px solid #8a8a8a;
     margin-left: 4%;

@@ -5,31 +5,47 @@ import "../home/Homebig.css";
 import "../home/Homesmall.css";
 import {get } from "../../services/api.service";
 import Search from "../search/Search";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 class Home extends Component {
-    constructor() {
-        super();
-        this.state = {
-            vendor: [],
-            foodRestaurant: [],
-            speakerRestaurant: [],
-            cakeRestaurant: [],
-            decorRestaurant: [],
 
-            // service: [],
-            // newVendor: [],
-            // topVendor: [],
-        };
-        this.getVendor();
-        this.getFoodRestaurant();
-        this.getSpeakerRestaurant();
-        this.getCakeRestaurant();
-        this.getDeCorRestaurant();
+  constructor() {
+    super();
+    this.state = {
+      allvendor: [],
+      vendor: [],
+      foodRestaurant: [],
+      speakerRestaurant: [],
+      cakeRestaurant: [],
+      decorRestaurant: [],
+      value: ''
 
-        // this.getService();
-        // this.getNewVendor();
-        // this.getTopVendor();
-    }
+      // service: [],
+      // newVendor: [],
+      // topVendor: [],
+    };
+    this.getAllVendor();
+    this.getVendor();
+    this.getFoodRestaurant();
+    this.getSpeakerRestaurant();
+    this.getCakeRestaurant();
+    this.getDeCorRestaurant();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    // this.getService();
+    // this.getNewVendor();
+    // this.getTopVendor();
+  }
+  getAllVendor() {
+    fetch("http://127.0.0.1:8000/api/allvendor").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          allvendor: data,
+        });
+      });
+    });
+  }
 
     getVendor() {
         fetch("http://127.0.0.1:8000/api/vendor").then((response) => {
@@ -80,163 +96,161 @@ class Home extends Component {
                 });
             });
         });
-    }
-    handleSearch = (search) => {
-        var vendorpro = [];
-        let oldVendor = JSON.parse(localStorage.getItem("vendor"));
-        if (!oldVendor) {
-            oldVendor = [];
-        }
-        if (search.length <= 0 || search === "") {
-            this.setState({
-                vendor: oldVendor,
-                valueSearch: search,
-            });
-        } else {
-            let searchValue = search.toLowerCase();
-            console.log("searchValue");
-            console.log(searchValue);
-            for (var i = 0; i < oldVendor.length; i++) {
-                // console.log(oldVendor[i].category.name.toLowerCase().indexOf(searchValue)!= -1)
-                if (oldVendor[i].fullname.toLowerCase().indexOf(searchValue) != -1) {
-                    vendorpro.push(oldVendor[i]);
-                    // laconsole.log("ccg");
-                    console.log(vendorpro);
-                }
-            }
-            this.setState({
-                vendor: vendorpro,
-                valueSearch: search,
-            });
-        }
-    };
-    render() {
-        return ( 
-            <React.Fragment>
-            <Header />
-            <div>
-                <img src="./img/main4.PNG" width="100%" height="auto" alt="" />
-                <div class="container">
-                    <div class="jumbotron text-center">
-                        <h1>QUEEN PARTY</h1>
-                        <p>
-                            <b>Website đặt tiệc tại nhà</b>
-                        </p>
-                        <p>
-                            Là trang web hàng đầu tại Việt Nam tích hợp nhiều cửa hàng & nhà
-                            hàng cung cấp dịch vụ nấu nướng và phục vụ tiệc như sinh nhật,
-                            tân gia, ngày kỷ niệm... tại gia.Khách hàng có thể đặt các món
-                            ăn và dịch vụ có sẵn trong cửa hàng hoặc tự tạo kế hoạch cho
-                            mình, sau đó gửi yêu cầu đến các nhà hàng, cửa hàng.
-                        </p>
-                    </div>
-                    <div class="row">
-                        {this.state.vendor.map((item) => (
-                            <div class="col-sm-4">
-                            <div className="img-container">
-                                <Link to={"/home/vendor/detail/" + item.id}>
-                                {" "}
-                                <img
-                                    src={"http://127.0.0.1:8000/storage/" + item.avatar}
-                                />
-                                </Link>
-                                {this.state.valueSearch && (
-                                <h2 className="name_vendor">{item.fullname}</h2>
-                                )}
-                            </div>
-                            </div>
-                        ))}
-                    </div>
-                    <hr />
+
+      });
+    });
+  }
+  // handleChange(event){
+  //   this.setState({id: event.target.value});
+  //   console.log(event);
+  // };
+  handleChange(id) {
+    this.setState({value: id.target.value});
+
+  }
+
+  handleSubmit(id) {
+    id.preventDefault();
+       this.props.history.push("/home/vendor/detail/" + this.state.value);    
+  }
+  render() {
+    console.log("home", this.state.vendor);
+    return (
+      <React.Fragment>
+        <Header />
+
+        <div>
+          <img src="./img/main4.PNG" width="100%" height="auto" alt="" />
+
+          <div class="container">
+            <div className="search">
+              <form onSubmit={this.handleSubmit}>
+                <select class="form-control" id="sel1" value={this.state.value} onChange={this.handleChange}>
+                  <option selected>Chọn nhà hàng bạn muốn tìm kiếm!</option>
+                  {this.state.allvendor.map((vendor) => (
+                   <option value={vendor.id} >{vendor.name}</option>                   
+                  ))}
+                </select>
+                <button type="submit" value="Submit">Search</button>
+                
+              </form>
+            </div>
+            <div class="jumbotron text-center">
+              <h1>QUEEN PARTY</h1>
+              <p>
+                <b>Website đặt tiệc tại nhà</b>
+              </p>
+              <p>
+                Là trang web hàng đầu tại Việt Nam tích hợp nhiều cửa hàng & nhà
+                hàng cung cấp dịch vụ nấu nướng và phục vụ tiệc như sinh nhật,
+                tân gia, ngày kỷ niệm... tại gia.Khách hàng có thể đặt các món
+                ăn và dịch vụ có sẵn trong cửa hàng hoặc tự tạo kế hoạch cho
+                mình, sau đó gửi yêu cầu đến các nhà hàng, cửa hàng.
+              </p>
+            </div>
+            <div class="row">
+              {this.state.vendor.map((item) => (
+                <div class="col-sm-4">
+                  <div className="img-container">
+                    <Link to={"/home/vendor/detail/" + item.id}>
+                      {" "}
+                      <img
+                        src={"http://127.0.0.1:8000/storage/" + item.avatar}
+                      />
+                    </Link>
+                  </div>
+
                 </div>
 
-                <div class="container">
-                    <h3 style={{ textAlign: "center" }}>THỨC ĂN</h3>
-                    <div class="row">
-                    {this.state.foodRestaurant.map((foodr) => (
-                        <div class="col-sm-3">
-                        <div className="foodRestaurant">
-                            <Link to={"/home/vendor/detail/" + foodr.id}>
-                            {" "}
-                            <img
-                                src={"http://127.0.0.1:8000/storage/" + foodr.avatar}
-                            />
-                            </Link>
-                            <p>{foodr.name}</p>
-                            {this.state.valueSearch && (
-                            <h2 className="name_vendor">{foodr.fullname}</h2>
-                            )}
-                        </div>
-                        </div>
-                    ))}
-                    </div>
-                    <hr />
-                </div>
 
-                <div class="container">
-                    <h3 style={{ textAlign: "center" }}>LOA MÁY</h3>
-                    <div class="row">
-                    {this.state.speakerRestaurant.map((speakerr) => (
-                        <div class="col-sm-3">
-                        <div className="foodRestaurant">
-                            <Link to={"/home/vendor/detail/" + speakerr.id}>
-                            {" "}
-                            <img
-                                src={"http://127.0.0.1:8000/storage/" + speakerr.avatar}
-                            />
-                            </Link>
-                            <p>{speakerr.name}</p>
-                            {this.state.valueSearch && (
-                            <h2 className="name_vendor">{speakerr.fullname}</h2>
-                            )}
-                        </div>
-                        </div>
-                    ))}
-                    </div>
-                    <hr />
+          <div class="container">
+            <h3 style={{ textAlign: "center" }}>THỨC ĂN</h3>
+            <div class="row">
+              {this.state.foodRestaurant.map((foodr) => (
+                <div class="col-sm-3">
+                  <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + foodr.avatar}
+                      class="image"
+                    />
+                    <Link to={"/home/vendor/detail/" + foodr.id}>
+                      {" "}
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                    </Link>
+                    <p>{foodr.name}</p>
+                  </div>
                 </div>
-                <div class="container">
-                    <h3 style={{ textAlign: "center" }}>BÁNH KEM</h3>
-                    <div class="row">
-                    {this.state.cakeRestaurant.map((cake) => (
-                        <div class="col-sm-3">
-                        <div className="foodRestaurant">
-                            <Link to={"/home/vendor/detail/" + cake.id}>
-                            {" "}
-                            <img
-                                src={"http://127.0.0.1:8000/storage/" + cake.avatar}
-                            />
-                            </Link>
-                            <p>{cake.name}</p>
-                            {this.state.valueSearch && (
-                            <h2 className="name_vendor">{cake.fullname}</h2>
-                            )}
-                        </div>
-                        </div>
-                    ))}
-                    </div>
-                    <hr />
+              ))}
+            </div>
+            <hr />
+          </div>
+          <div class="container">
+            <h3 style={{ textAlign: "center" }}>LOA MÁY</h3>
+            <div class="row">
+              {this.state.speakerRestaurant.map((speakerr) => (
+                <div class="col-sm-3">
+                  <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + speakerr.avatar}
+                      class="image"
+                    />
+                    <Link to={"/home/vendor/detail/" + speakerr.id}>
+                      {" "}
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                    </Link>
+                    <p>{speakerr.name}</p>
+                  </div>
                 </div>
-                <div class="container">
-                    <h3 style={{ textAlign: "center" }}>TRANG TRÍ</h3>
-                    <div class="row">
-                    {this.state.decorRestaurant.map((decor) => (
-                        <div class="col-sm-3">
-                        <div className="foodRestaurant">
-                            <Link to={"/home/vendor/detail/" + decor.id}>
-                            {" "}
-                            <img
-                                src={"http://127.0.0.1:8000/storage/" + decor.avatar}
-                            />
-                            </Link>
-                            <p>{decor.name}</p>
-                            {this.state.valueSearch && (
-                            <h2 className="name_vendor">{decor.fullname}</h2>
-                            )}
-                        </div>
-                        </div>
-                    ))}
-                    </div>
+              ))}
+            </div>
+            <hr />
+          </div>
+          <div class="container">
+            <h3 style={{ textAlign: "center" }}>BÁNH KEM</h3>
+            <div class="row">
+              {this.state.cakeRestaurant.map((cake) => (
+                <div class="col-sm-3">
+                  <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + cake.avatar}
+                      class="image"
+                    />
+                    <Link to={"/home/vendor/detail/" + cake.id}>
+                      {" "}
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                    </Link>
+                    <p>{cake.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <hr />
+          </div>
+          <div class="container">
+            <h3 style={{ textAlign: "center" }}>TRANG TRÍ</h3>
+            <div class="row">
+              {this.state.decorRestaurant.map((decor) => (
+                <div class="col-sm-3">
+                  <div className="foodRestaurant">
+                    <img
+                      src={"http://127.0.0.1:8000/storage/" + decor.avatar}
+                      class="image"
+                    />
+                    <Link to={"/home/vendor/detail/" + decor.id}>
+                      {" "}
+                      <div class="middle">
+                        <div class="text">Xem</div>
+                      </div>
+                    </Link>
+                    <p>{decor.name}</p>
+                  </div>
+
                 </div>
             </div>
             <Footer />
@@ -245,4 +259,6 @@ class Home extends Component {
     }
 }
 
-export default Home;
+
+export default withRouter(Home);
+
