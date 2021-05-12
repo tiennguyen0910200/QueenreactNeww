@@ -5,21 +5,20 @@ import "../detailRestaurant/DetailRestaurantbig.css";
 import "../detailRestaurant/DetailRestaurantsmall.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import RatingStars from '../starRating/StarsRating';
 
 class DetailRestaurant extends Component {
-
   constructor(props) {
     super(props);
-    let user = localStorage.getItem("user_id");
+    let user = localStorage.getItem("idUser");
     this.state = {
       detail: [],
       product: [],
+      login: user,
       getdataComment: [],
       btnComment: false,
     };
     var id = props.match.params.id;
-    localStorage.setItem("vendor_id", id);
+    localStorage.setItem("id_vendor", id);
     //localStorage.setItem("id_product", id);
     this.getDetail(id);
     this.getProduct(id);
@@ -33,19 +32,20 @@ class DetailRestaurant extends Component {
         console.log(data);
         this.setState({
           detail: data,
-
         });
-    }
-    getProduct(id) {
-        fetch("http://127.0.0.1:8000/api/getproduct/" + id).then((response) => {
-            response.json().then((data) => {
-                console.log(data);
-                this.setState({
-                    product: data,
-                });
-            });
+      });
+    });
+  }
+  getProduct(id) {
+    fetch("http://127.0.0.1:8000/api/getproduct/" + id).then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          product: data,
         });
-    }
+      });
+    });
+  }
   getAllComment(id) {
     fetch("http://127.0.0.1:8000/api/totalComment/" + id).then((response) => {
       console.log(response);
@@ -58,33 +58,36 @@ class DetailRestaurant extends Component {
     });
   }
   onAddComment(event) {
+    if (this.state.login != null) {
     event.preventDefault();
-    let content = event.target['comment'].value;
+    let content = event.target["comment"].value;
     let vendor_id = localStorage.getItem("id_vendor");
-    // let user_id = event.target['user_id'].value;
-    //let user_id = localStorage.getItem('user_id');
+    //let user_id = event.target['user_id'].value;
+    let user_id = localStorage.getItem("idUser");
     var id = this.props.match.params.id;
     console.log(id);
     console.log(content);
     let comment = {
-      user_id: 2,
+      user_id: user_id,
       content: content,
       vendor_id: id,
     };
-
     let postInJson = JSON.stringify(comment);
     console.log(vendor_id);
     fetch("http://127.0.0.1:8000/api/addCommentvendor/" + vendor_id, {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: postInJson
-    })
-    .then((response) => {
+      body: postInJson,
+    }).then((response) => {
       console.log(response);
       window.location.reload();
     });
+  }else{
+    alert("Để đánh giá bạn phải đăng nhập/đăng ký");
+    this.props.history.push("/home/login");
+  }
   }
   myFunction(e) {
     e.preventDefault();
@@ -142,7 +145,6 @@ class DetailRestaurant extends Component {
               </div>
               <hr />
             </div>
-
             <div class="container">
               <h2 style={{ color: "#eba28c" }}>Welcome</h2>
               <div class="row">
@@ -190,13 +192,15 @@ class DetailRestaurant extends Component {
                       <button type="submit">Đăng</button>
                     </form>
                   </div>
-
                 </div>
-                </div>
-                <Footer />
-            </React.Fragment>
+              </div>
+            </div>
+          </div>
+        <br/>
+        </div>
+        <Footer />
+      </React.Fragment>
     );
+  }
 }
-}
-
 export default withRouter(DetailRestaurant);

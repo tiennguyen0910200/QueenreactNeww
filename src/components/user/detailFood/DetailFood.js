@@ -5,14 +5,13 @@ import "../detailFood/DetailFoodbig.css";
 import "../detailFood/DetailFoodsmall.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import Rating from "@material-ui/lab/Rating";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 class DetailFood extends Component {
   constructor(props) {
     super(props);
     let user = localStorage.getItem("idUser");
-    
     this.state = {
       detailProduct: [],
       getdataComment: [],
@@ -22,23 +21,21 @@ class DetailFood extends Component {
       btnOrder: false,
       login: user,
       btnComment: false,
+      stars: [],
       //cart:[]
-      stars: []
     };
     var id = props.match.params.id;
-
     localStorage.setItem("id_product", id);
     // localStorage.setItem("id_vendor", id);
     this.getDetailProduct(id);
     this.getAllComment(id);
+    //this.getStar();
     this.onAddComment = this.onAddComment.bind(this);
     this.buttonComment = this.buttonComment.bind(this);
-
     this.postProductDetail = this.postProductDetail.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
   }
   getDetailProduct(id) {
-    let product_id = localStorage.getItem("product_id");
     fetch("http://127.0.0.1:8000/api/product/detail/" + id).then((response) => {
       response.json().then((data) => {
         console.log(data);
@@ -49,35 +46,38 @@ class DetailFood extends Component {
     });
   }
   onAddComment(event) {
+    if (this.state.login != null) {
     event.preventDefault();
-    let content = event.target['comment'].value;
+    let content = event.target["comment"].value;
     let vendor_id = localStorage.getItem("id_vendor");
     let product_id = localStorage.getItem("id_product");
     // let user_id = event.target['user_id'].value;
-    //let user_id = localStorage.getItem('user_id');
+    let user_id = localStorage.getItem("idUser");
     var id = this.props.match.params.id;
     console.log(id);
     console.log(content);
     let comment = {
-      user_id: 2,
+      user_id: user_id,
       content: content,
       vendor_id: vendor_id,
-      product_id: product_id
+      product_id: product_id,
     };
-
     let postInJson = JSON.stringify(comment);
     console.log(vendor_id);
     fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: postInJson
-    })
-    .then((response) => {
+      body: postInJson,
+    }).then((response) => {
       console.log(response);
       window.location.reload();
     });
+    }else{
+      alert("Để đánh giá bạn phải đăng nhập/đăng ký");
+      this.props.history.push("/home/login");
+    }
   }
   buttonComment() {
     this.setState({
@@ -108,7 +108,7 @@ class DetailFood extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let user_id = localStorage.getItem("idUser");
-      let vendor_id = localStorage.getItem("vendor_id");
+      let vendor_id = localStorage.getItem("id_vendor");
       var id = this.props.match.params.id;
       let orders = {
         product_id: id,
@@ -138,20 +138,20 @@ class DetailFood extends Component {
   }
   getStar() {
     let product_id = localStorage.getItem("product_id");
-    fetch("http://127.0.0.1:8000/api/getStar/" + product_id)
-    .then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          stars: data,
+    fetch("http://127.0.0.1:8000/api/getStar/" + product_id).then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            stars: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   render() {
     let detailp = this.state.detailProduct;
     let star = this.state.stars;
-
     return (
       <React.Fragment>
         <Header />
@@ -166,51 +166,33 @@ class DetailFood extends Component {
                   />
                 </div>
               </div>
-
-              <div class="col-sm-8">
-                <div className="detail_order">
-                  <h1>{detailp.name}</h1>
-                  <hr />
-                  <div className="flex">
-                    <div className="detail_order_name">
-                      <div>
-                        <img
-                          src={
-                            "http://127.0.0.1:8000/storage/" + detailp.picture
-                          }
-                          alt=""
-                          width="350px"
-                          height="250px"
-                        />
-                      </div>
-                      <div className="detail-content">
-                        <p>Mô tả: {detailp.description}</p>
-                        <br />
-                        <p>Giá: {detailp.price} đ</p>
-                        <br />
-                        <p>Giảm giá: {detailp.discount}</p>
-                        <br />
-                        <div className="flex">
-                        
-                          {/* {this.state.stars.map((star) => ( */}
-                            <div>
-                              <p>Đánh giá: {star} / 5</p>
-                              {/* <i class="far fa-star"></i>&ensp;
+              <div class="col-sm-6">
+                <h4>{detailp.name}</h4>
+                <br />
+                <p>Mô tả: {detailp.description}</p>
+                <p>Giá: {detailp.price}đ</p>
+                <p>Giảm giá: {detailp.discount}</p>
+                <div className="flex">
+                  {/* /* {this.state.stars.map((star) => ( */}
+                  <div>
+                    <p>Đánh giá: {star} / 5</p>
+                    {/* <i class="far fa-star"></i>&ensp;
                               <i class="far fa-star"></i>&ensp;
                               <i class="far fa-star"></i>&ensp;
                               <i class="far fa-star"></i>&ensp;
-                              <i class="far fa-star"></i> */}
-                              <Box component="fieldset" mb={3} borderColor="transparent">
-                                {/* <Typography component="legend">Read only</Typography> */}
-                                <Rating name="half-rating-read" value={star} precision={0.5} readOnly />
-                              </Box>
-                            </div>
-                          {/* ))} */}
-                        </div>
-                      </div>
-                    </div>
+                              <i class="fara-star"></i> */}
+                    <Box component="fieldset" mb={3} borderColor="transparent">
+                      {/* <Typography component="legend">Read only</Typography> */}
+                      <Rating
+                        name="half-rating-read"
+                        value={star}
+                        precision={0.5}
+                        readOnly
+                      />
+                    </Box>
                   </div>
-
+                  {/* ))} */}
+                </div>
 
                 <div className="detail-button">
                   <button onClick={this.myFunction}>
@@ -218,7 +200,7 @@ class DetailFood extends Component {
                   </button>
                   &emsp;
                   <button onClick={this.postProductDetail} type="submit">
-                    <i class="fas fa-cart-plus">Đặt</i>                   
+                    <i class="fas fa-cart-plus">Đặt</i>
                   </button>
                 </div>
                 <div id="myDIV">
@@ -257,11 +239,11 @@ class DetailFood extends Component {
               </div>
             </div>
           </div>
+          <br/>
         </div>
         <Footer />
       </React.Fragment>
     );
   }
 }
-
 export default withRouter(DetailFood);
