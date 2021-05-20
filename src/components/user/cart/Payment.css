@@ -1,6 +1,6 @@
 .contain {
-  width: 1650px;
-  margin-left: 135px;
+  width: 1350px;
+  /* margin-left: 135px; */
   margin-top: 20px;
   font-size: 16px;
 }
@@ -10,7 +10,7 @@
   height: 1px;
   background-color: #eaa28b;
   margin-top: 10px;
-  width: 1700px;
+  width: 1350px;
 }
 
 .flex-PM {
@@ -59,7 +59,7 @@
   border-color: #eb673c;
   height: 33px;
   width: 100px !important;
-  margin-left: 1550px;
+  float: right;
   font-size: 15px;
 }
 

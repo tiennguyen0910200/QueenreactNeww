@@ -5,6 +5,7 @@ import CartItem from './CartItem';
 import { withRouter } from 'react-router';
 import UserRow from './CartItem';
 import ExpenseTableRow from './CartItem';
+import { Link } from "react-router-dom";
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,6 @@ class Checkout extends Component {
         this.getTotalPrice();
         this.getTotalProduct();
         this.onOrderSubmit = this.onOrderSubmit.bind(this);
-        this.deleteItem = this.deleteItem.bind(this);
 
     }
     getAllProducts() {
@@ -68,6 +68,7 @@ class Checkout extends Component {
         let address = event.target["address"].value;
         let order_time = event.target["order_time"].value;
         let note = event.target["note"].value;
+        let status = "cho phe duyet";
 
         let order = {
             // id: id,
@@ -76,50 +77,32 @@ class Checkout extends Component {
             address: address,
             order_time: order_time,
             note: note,
+            status: status,
             user_id: user_id
         }
         let postInJson = JSON.stringify(order);
-        // localStorage.setItem("order_list", order.id);
-        // console.log("order_list");
+        localStorage.setItem("order_id", order.id);
+        console.log("order_list");
         fetch("http://127.0.0.1:8000/api/product/order", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'Access-Control-Allow-Methods': 'POST, PUT, GET, OPTIONS, DELETE, PATCH',
             },
             body: postInJson
         })
-            .then(response => {
-                localStorage.setItem("order_list",order.name);
-                console.log("order_list");
-                // console.log(order);
-                // // window.location.reload();
-                // alert('Xác nhận đơn hàng');
-                // this.props.history.push('/home/payment');
-                response.json().then((order) => {
-                    console.log(order);
-                    alert('Xác nhận đơn hàng');
-                    this.props.history.push('/home/payment');
-                });
+        .then(response => {
+            localStorage.setItem("order_id",order.id);
+            console.log("order_list");
+            response.json().then((order) => {
+                console.log(order);
+                alert('Xác nhận đơn hàng');
+                this.props.history.push('/home/payment');
             });
+        });
     }
-    deleteItem(item) {
-        return (event) => {
-          let product_id =localStorage.getItem('product_id');
-          fetch("http://127.0.0.1:8000/api/deletecart/" + item, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': product_id,
-            }
-          }).then(response => {
-            response.json().then((data) => {
-            //   this.getData(product_id);
-            });
-          });
-        }
-      }
       componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/expenses/')
+        axios.get('http://127.0.0.1:8000/api/cart/')
           .then(res => {
             this.setState({
               expenses: res.data
@@ -151,7 +134,22 @@ class Checkout extends Component {
                                             <b>Đơn hàng</b>
                                         </h3>
                                     </div>
-                                    <h4 className="strong-titleCheck"><b> Danh sách dịch vụ </b></h4>
+                                    <div class="product-flex">
+                                        <div>
+                                            <strong></strong>
+                                        </div>
+                                        <div >
+                                            <strong>
+                                                    {/* {totals} <span>Đơn</span> */}
+                                                    <a className="pull-right link " style={{color: 'rgb(26, 156, 183)'}}>Thêm món
+                                                        <Link to="/">
+                                                            <button style={{border: "none", height: "30px", marginTop: "17px", marginLeft: "5px"}}><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
+                                                        </Link>
+                                                    </a>
+                                                    <div className="clear" />
+                                            </strong>
+                                        </div>
+                                    </div>
                                     <hr className="hr-payment" />
                                     {/* {this.state.carts.map((cart, index) =>
                                         <div>
@@ -172,21 +170,10 @@ class Checkout extends Component {
                                     )} */}
                                      {this.DataTable()}
                                                            
+                                    <br />
                                     <div class="product-flex">
                                         <div>
-                                            <strong>Số đơn hàng</strong>
-                                        </div>
-                                        <div>
-                                            <strong>
-                                                <b>
-                                                    {totals} <span>Đơn</span>
-                                                </b>
-                                            </strong>
-                                        </div>
-                                    </div><br />
-                                    <div class="product-flex">
-                                        <div>
-                                            <strong>Tổng đơn hàng</strong>
+                                            <strong>Thành tiền:</strong>
                                         </div>
                                         <div>{this.state.totalPrice.map((total, index) =>
                                             <strong>
@@ -249,7 +236,7 @@ class Checkout extends Component {
                                                     <strong className="strong-titleCheck">Thời gian giao hàng  <span className="required">(*)</span></strong>
                                                 </div>
                                                 <div>
-                                                    <input className="form-input-checkout" type="date" id="order_time" name="order_time" required />
+                                                    <input className="form-input-checkout" type="datetime-local" id="order_time" name="order_time" required />
                                                 </div>
                                             </div>
                                             <div>
