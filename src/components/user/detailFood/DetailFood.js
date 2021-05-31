@@ -25,11 +25,11 @@ class DetailFood extends Component {
       //cart:[]
     };
     var id = props.match.params.id;
-    localStorage.setItem("id_product", id);
+    localStorage.setItem("product_id", id);
     // localStorage.setItem("id_vendor", id);
     this.getDetailProduct(id);
     this.getAllComment(id);
-    //this.getStar();
+    this.getStar();
     this.onAddComment = this.onAddComment.bind(this);
     this.buttonComment = this.buttonComment.bind(this);
     this.postProductDetail = this.postProductDetail.bind(this);
@@ -47,34 +47,34 @@ class DetailFood extends Component {
   }
   onAddComment(event) {
     if (this.state.login != null) {
-    event.preventDefault();
-    let content = event.target["comment"].value;
-    let vendor_id = localStorage.getItem("id_vendor");
-    let product_id = localStorage.getItem("id_product");
-    // let user_id = event.target['user_id'].value;
-    let user_id = localStorage.getItem("idUser");
-    var id = this.props.match.params.id;
-    console.log(id);
-    console.log(content);
-    let comment = {
-      user_id: user_id,
-      content: content,
-      vendor_id: vendor_id,
-      product_id: product_id,
-    };
-    let postInJson = JSON.stringify(comment);
-    console.log(vendor_id);
-    fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: postInJson,
-    }).then((response) => {
-      console.log(response);
-      window.location.reload();
-    });
-    }else{
+      event.preventDefault();
+      let content = event.target["comment"].value;
+      let vendor_id = localStorage.getItem("vendor_id");
+      let product_id = localStorage.getItem("product_id");
+      // let user_id = event.target['user_id'].value;
+      let user_id = localStorage.getItem("idUser");
+      var id = this.props.match.params.id;
+      console.log(id);
+      console.log(content);
+      let comment = {
+        user_id: user_id,
+        content: content,
+        vendor_id: vendor_id,
+        product_id: product_id,
+      };
+      let postInJson = JSON.stringify(comment);
+      console.log(vendor_id);
+      fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: postInJson,
+      }).then((response) => {
+        console.log(response);
+        window.location.reload();
+      });
+    } else {
       alert("Để đánh giá bạn phải đăng nhập/đăng ký");
       this.props.history.push("/home/login");
     }
@@ -108,7 +108,7 @@ class DetailFood extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let user_id = localStorage.getItem("idUser");
-      let vendor_id = localStorage.getItem("id_vendor");
+      let vendor_id = localStorage.getItem("vendor_id");
       var id = this.props.match.params.id;
       let orders = {
         product_id: id,
@@ -160,10 +160,7 @@ class DetailFood extends Component {
             <div class="row">
               <div class="col-sm-6">
                 <div className="detail_rtr">
-                  <img
-                    src={"http://127.0.0.1:8000/storage/" + detailp.picture}
-                    alt=""
-                  />
+                  <img src={detailp.picture} alt="" />
                 </div>
               </div>
               <div class="col-sm-6">
@@ -239,7 +236,7 @@ class DetailFood extends Component {
               </div>
             </div>
           </div>
-          <br/>
+          <br />
         </div>
         <Footer />
       </React.Fragment>

@@ -18,7 +18,7 @@ class DetailRestaurant extends Component {
       btnComment: false,
     };
     var id = props.match.params.id;
-    localStorage.setItem("id_vendor", id);
+    localStorage.setItem("vendor_id", id);
     //localStorage.setItem("id_product", id);
     this.getDetail(id);
     this.getProduct(id);
@@ -59,35 +59,35 @@ class DetailRestaurant extends Component {
   }
   onAddComment(event) {
     if (this.state.login != null) {
-    event.preventDefault();
-    let content = event.target["comment"].value;
-    let vendor_id = localStorage.getItem("id_vendor");
-    //let user_id = event.target['user_id'].value;
-    let user_id = localStorage.getItem("idUser");
-    var id = this.props.match.params.id;
-    console.log(id);
-    console.log(content);
-    let comment = {
-      user_id: user_id,
-      content: content,
-      vendor_id: id,
-    };
-    let postInJson = JSON.stringify(comment);
-    console.log(vendor_id);
-    fetch("http://127.0.0.1:8000/api/addCommentvendor/" + vendor_id, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: postInJson,
-    }).then((response) => {
-      console.log(response);
-      window.location.reload();
-    });
-  }else{
-    alert("Để đánh giá bạn phải đăng nhập/đăng ký");
-    this.props.history.push("/home/login");
-  }
+      event.preventDefault();
+      let content = event.target["comment"].value;
+      let vendor_id = localStorage.getItem("vendor_id");
+      //let user_id = event.target['user_id'].value;
+      let user_id = localStorage.getItem("idUser");
+      var id = this.props.match.params.id;
+      console.log(id);
+      console.log(content);
+      let comment = {
+        user_id: user_id,
+        content: content,
+        vendor_id: id,
+      };
+      let postInJson = JSON.stringify(comment);
+      console.log(vendor_id);
+      fetch("http://127.0.0.1:8000/api/addCommentvendor/" + vendor_id, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: postInJson,
+      }).then((response) => {
+        console.log(response);
+        window.location.reload();
+      });
+    } else {
+      alert("Để đánh giá bạn phải đăng nhập/đăng ký");
+      this.props.history.push("/home/login");
+    }
   }
   myFunction(e) {
     e.preventDefault();
@@ -114,10 +114,7 @@ class DetailRestaurant extends Component {
               <div class="row">
                 <div class="col-sm-6">
                   <div className="detail_rtr">
-                    <img
-                      src={"http://127.0.0.1:8000/storage/" + detail.avatar}
-                      alt=""
-                    />
+                    <img src={detail.avatar} alt="" />
                   </div>
                 </div>
                 <div class="col-sm-6">
@@ -153,12 +150,7 @@ class DetailRestaurant extends Component {
                     <div className="foodRestaurant">
                       <Link to={"/home/product/detail/" + product.id}>
                         {" "}
-                        <img
-                          src={
-                            "http://127.0.0.1:8000/storage/" + product.picture
-                          }
-                          className="image"
-                        />
+                        <img src={product.picture} className="image" />
                         <div class="middle">
                           <div class="text">
                             <p>{product.price}</p>
@@ -196,7 +188,7 @@ class DetailRestaurant extends Component {
               </div>
             </div>
           </div>
-        <br/>
+          <br />
         </div>
         <Footer />
       </React.Fragment>
