@@ -135,6 +135,7 @@ class DetailFood extends Component {
         product_id: id,
         user_id: user_id,
         vendor_id: vendor_id,
+        quantity: 1,
       };
       let postInJson = JSON.stringify(orders);
       fetch("http://127.0.0.1:8000/api/product/orderlist", {
