@@ -7,15 +7,21 @@ class Payment extends Component {
         this.state = {
             userOrder: [],
             totalPrice: [],
+            momoUrl:'',
+            check: true,
+            checkMomo: false,
         }
         this.getUserOrder();
         this.getTotalPrice();
         this.onPaymentAlert = this.onPaymentAlert.bind(this);
+        this.momoPayment = this.momoPayment.bind(this);
     }
     getUserOrder() {
         fetch("http://127.0.0.1:8000/api/product/getOrder")
             .then(response => {
                 response.json().then((data) => {
+                    localStorage.setItem("order_id",data.id);
+            console.log("order_list");
                     console.log(data);
                     this.setState({
                         userOrder: data
@@ -39,22 +45,42 @@ class Payment extends Component {
     }
     onPaymentAlert(event) {
         event.preventDefault();
-        fetch("http://127.0.0.1:8000/api/orderlist/delete", {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            // body: postInJson
-        })
-            .then(response => {
-                alert("Đang chờ admin phê duyệt");
-                this.props.history.push('/');
-            });
+        this.props.history.push(this.state.momoUrl);
+        // fetch("http://127.0.0.1:8000/api/orderlist/delete", {
+        //     method: "DELETE",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     // body: postInJson
+        // })
+        //     .then(response => {
+        //         alert("Đang chờ admin phê duyệt");
+        //         this.props.history.push('/');
+        //     });
+    }
+    momoPayment(){
+        fetch("http://127.0.0.1:8000/api/paymentOnline", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Methods': 'POST, PUT, GET, OPTIONS, DELETE, PATCH',
+        },
+        }).then(response => {
+        response.json().then((data) => {
+            console.log('payment',data);
+            this.setState({
+                momoUrl: data.payUrl,
+                check: false,
+                checkMomo: true
+            })
+            //window.location.reload();
+        });
+        });
     }
     render() {
         let userorder = this.state.userOrder;
         return (
-            <div>
+            <div  className="container">
                 <div className="contain">
                     <div className="flex-PM">
                         <div>Giá trị đơn hàng </div>
@@ -136,7 +162,7 @@ class Payment extends Component {
                                         id="huey"
                                         name="drone"
                                         value="tructiep"
-                                        checked
+                                        checked={this.state.check}
                                     />{" "}
               Thanh toán trực tiếp
               <br />
@@ -146,18 +172,26 @@ class Payment extends Component {
                                         type="radio"
                                         id="huey"
                                         name="drone"
-                                        value="tindung"
+                                        checked={this.state.checkMomo}
+                                        value="tindung" onClick={this.momoPayment}
                                     />
               Thanh toán thẻ tín dụng
               <br />
                                 </p>
+                                {/* <form onSubmit={this.momoPayment} action="">
+                            <button type="submit" className="btn-payment" ><b>
+                               Online
+                         </b></button>
+                        </form> */}
                             </div>
                         </div>
-                        <form onSubmit={this.onPaymentAlert} action="">
+                        {this.state.check ? <form onSubmit={this.onPaymentAlert} action="">
                             <button type="submit" className="btn-payment" ><b>
                                 Tiếp tục
-        </b></button>
-                        </form>
+                             </b></button>
+                        </form> : <a href={this.state.momoUrl}>Momo</a>}
+                        
+                        
 
                     </div>
                 </div>
