@@ -15,7 +15,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
   height: 600px;
-  max-width: 100%;
   margin-left: -60px;
 }
 
@@ -109,21 +108,21 @@
   border: none;
 }
 
-.quantity-style{
+.quantity-style {
   display: flex;
+  padding-left: 20px;
 }
 
-.quantity-style button{
+.quantity-style button {
   height: 30px;
   width: 30px;
-  margin-top: 22px;
   border-radius: 7px;
   border: none;
   background: #f2f2f2;
 }
 
-.quantity-style span{
-  margin-top: 25px;
+.quantity-style span {
+  margin-top: 2px;
 }
 @media only screen and (max-width: 500px) {
   .khungInfo {

@@ -17,7 +17,8 @@ class DetailRestaurant extends Component {
       getdataComment: [],
     };
     var id = props.match.params.id;
-    localStorage.setItem("id_vendor", id);
+    localStorage.setItem("vendor_id", id);
+    //localStorage.setItem("id_product", id);
     this.getDetail(id);
     this.getProduct(id);
     this.getAllComment(id);
@@ -60,7 +61,8 @@ class DetailRestaurant extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let content = event.target["comment"].value;
-      let vendor_id = localStorage.getItem("id_vendor");
+      let vendor_id = localStorage.getItem("vendor_id");
+      //let user_id = event.target['user_id'].value;
       let user_id = localStorage.getItem("idUser");
       var id = this.props.match.params.id;
       console.log(id);

@@ -22,9 +22,11 @@ class DetailFood extends Component {
       stars: [],
     };
     var id = props.match.params.id;
-    localStorage.setItem("id_product", id);
+    localStorage.setItem("product_id", id);
+    // localStorage.setItem("id_vendor", id);
     this.getDetailProduct(id);
     this.getAllComment(id);
+    this.getStar();
     this.onAddComment = this.onAddComment.bind(this);
     this.buttonComment = this.buttonComment.bind(this);
     this.postProductDetail = this.postProductDetail.bind(this);
@@ -45,8 +47,9 @@ class DetailFood extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let content = event.target["comment"].value;
-      let vendor_id = localStorage.getItem("id_vendor");
-      let product_id = localStorage.getItem("id_product");
+      let vendor_id = localStorage.getItem("vendor_id");
+      let product_id = localStorage.getItem("product_id");
+      // let user_id = event.target['user_id'].value;
       let user_id = localStorage.getItem("idUser");
       var id = this.props.match.params.id;
       console.log(id);
@@ -58,7 +61,6 @@ class DetailFood extends Component {
         product_id: product_id,
       };
       let postInJson = JSON.stringify(comment);
-      console.log(user_id);
       console.log(vendor_id);
       fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
         method: "post",
@@ -127,7 +129,7 @@ class DetailFood extends Component {
     if (this.state.login != null) {
       event.preventDefault();
       let user_id = localStorage.getItem("idUser");
-      let vendor_id = localStorage.getItem("id_vendor");
+      let vendor_id = localStorage.getItem("vendor_id");
       var id = this.props.match.params.id;
       let orders = {
         product_id: id,
