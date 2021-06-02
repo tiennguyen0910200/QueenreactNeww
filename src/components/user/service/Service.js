@@ -64,9 +64,9 @@ class Service extends Component {
         <Header />
         <div>
           <div class="container">
-          <h2 className="title-service">
+          <h3 className="title-service">
             Queen Party - Cung cấp hệ thống dịch vụ cao cấp
-          </h2>
+          </h3>
             <div class="row">
               <div class="col-sm-3">
               <div
@@ -76,7 +76,7 @@ class Service extends Component {
                 <a>
                   <img
                     className="imageShow"
-                    src="../img/food_content/comchien.jpg"
+                    src="https://firebasestorage.googleapis.com/v0/b/upload-queen.appspot.com/o/Food%2FMemory%2Fcomchien.PNG?alt=media&token=b7026428-c0f6-44d1-a87c-84ef44fc1556"
                     alt=""
                   />
                 </a>
@@ -95,7 +95,7 @@ class Service extends Component {
               >
                 <a>
                   <img
-                    src="../img/Speaker/loa2.jpg"
+                    src="https://firebasestorage.googleapis.com/v0/b/upload-queen.appspot.com/o/Speaker%2FDanasound%2FLoa%20Klipsch%20RB%2081II%20(bookshelf).PNG?alt=media&token=1f9b32dd-2e55-4c32-a8c5-b94f02172b78"
                     alt=""
                     className="imageShow"
                   />
@@ -114,7 +114,7 @@ class Service extends Component {
               >
                 <a>
                   <img
-                    src="../img/Table/ban1.jpeg"
+                    src="https://firebasestorage.googleapis.com/v0/b/upload-queen.appspot.com/o/Decor%2FRinDecor%2F4.jpg?alt=media&token=ef60f517-96b6-4559-9056-a5d01b739db0"
                     alt=""
                     className="imageShow"
                   />
@@ -134,7 +134,7 @@ class Service extends Component {
               >
                 <a>
                   <img
-                    src="../img/Cake/cake4.jpg"
+                    src="https://firebasestorage.googleapis.com/v0/b/upload-queen.appspot.com/o/Cake%2FdongTien%2Fcake6.jpg?alt=media&token=9b1ad92c-47b9-44c5-920c-ab1f7303cefb"
                     alt=""
                     className="imageShow"
                   />
@@ -159,7 +159,7 @@ class Service extends Component {
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
                     <img
-                      src={"http://127.0.0.1:8000/storage/" + foodr.avatar}
+                      src={foodr.avatar}
                       class="image"
                     />
                     <Link to={"/home/vendor/detail/" + foodr.id}>
@@ -182,7 +182,7 @@ class Service extends Component {
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
                     <img
-                      src={"http://127.0.0.1:8000/storage/" + speakerr.avatar}
+                      src={speakerr.avatar}
                       class="image"
                     />
                     <Link to={"/home/vendor/detail/" + speakerr.id}>
@@ -204,7 +204,7 @@ class Service extends Component {
               {this.state.cakeRestaurant.map((cake) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
-                    <img src={"http://127.0.0.1:8000/storage/" + cake.avatar} class="image" />
+                    <img src={cake.avatar} class="image" />
                     <Link to={"/home/vendor/detail/" + cake.id}>
                       {" "}
                       <div class="middle">
@@ -225,7 +225,7 @@ class Service extends Component {
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
                     <img
-                      src={"http://127.0.0.1:8000/storage/" + decor.avatar}
+                      src={decor.avatar}
                       class="image"
                     />
                     <Link to={"/home/vendor/detail/" + decor.id}>

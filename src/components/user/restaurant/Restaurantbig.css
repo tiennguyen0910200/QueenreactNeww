@@ -117,6 +117,7 @@
   .allfoodRestaurant img {
     width: 250px;
     height: 200px;
+    border-radius: 5px;
   }
   .allfoodRestaurant {
     position: relative;

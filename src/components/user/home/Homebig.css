@@ -1,3 +1,6 @@
+body{
+  font-family: cursive;
+}
 @media only screen and (min-width: 500px) {
   .text-center h1 {
     font-family: cursive;
@@ -60,6 +63,10 @@
     width: 40%;
     margin: auto;
   }
+  .search button{
+    background-color: #eba28c;
+    outline: none;
+  }
   .search form {
     display: flex;
   }
@@ -70,7 +77,11 @@
   .foodRestaurant img {
     width: 280px;
     height: 200px;
+    border-radius: 5px;
   }
+  /* .foodRestaurant p{
+    padding-top: 15px;
+  } */
   .foodRestaurant {
     position: relative;
   }

@@ -1,9 +1,7 @@
 @media only screen and (min-width: 500px) {
   .title-service {
-    color: #eaa28b;
     margin-top: 30px;
-    font-size: 40px;
-    font-family: "Sue Ellen Francisco";
+    text-transform:uppercase;
     text-align: center;
   }
   .line1 {
@@ -33,6 +31,7 @@
   .imageShow {
     width: 280px;
     height: 200px;
+    border-radius: 5px;
   }
   .title-line {
     text-align: center;

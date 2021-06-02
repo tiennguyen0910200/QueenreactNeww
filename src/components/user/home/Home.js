@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import Header from "../header/Header";
+import { Link, withRouter } from "react-router-dom";
 import Footer from "../footer/Footer";
+import Header from "../header/Header";
 import "../home/Homebig.css";
 import "../home/Homesmall.css";
-import { get } from "../../services/api.service";
-import Search from "../search/Search";
-import { Link, withRouter } from "react-router-dom";
 class Home extends Component {
   constructor() {
     super();
@@ -142,14 +140,13 @@ class Home extends Component {
                   <div className="img-container">
                     <Link to={"/home/vendor/detail/" + item.id}>
                       {" "}
-                      <img
-                        src={"http://127.0.0.1:8000/storage/" + item.avatar}
-                      />
+                      <img src={item.avatar} />
                     </Link>
                   </div>
                 </div>
               ))}
             </div>
+            <br />
             <hr />
           </div>
           <br />
@@ -159,10 +156,7 @@ class Home extends Component {
               {this.state.foodRestaurant.map((foodr) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
-                    <img
-                      src={"http://127.0.0.1:8000/storage/" + foodr.avatar}
-                      class="image"
-                    />
+                    <img src={foodr.avatar} class="image" />
                     <Link to={"/home/vendor/detail/" + foodr.id}>
                       {" "}
                       <div class="middle">
@@ -183,10 +177,7 @@ class Home extends Component {
               {this.state.speakerRestaurant.map((speakerr) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
-                    <img
-                      src={"http://127.0.0.1:8000/storage/" + speakerr.avatar}
-                      class="image"
-                    />
+                    <img src={speakerr.avatar} class="image" />
                     <Link to={"/home/vendor/detail/" + speakerr.id}>
                       {" "}
                       <div class="middle">
@@ -207,10 +198,7 @@ class Home extends Component {
               {this.state.cakeRestaurant.map((cake) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
-                    <img
-                      src={"http://127.0.0.1:8000/storage/" + cake.avatar}
-                      class="image"
-                    />
+                    <img src={cake.avatar} class="image" />
                     <Link to={"/home/vendor/detail/" + cake.id}>
                       {" "}
                       <div class="middle">
@@ -231,10 +219,7 @@ class Home extends Component {
               {this.state.decorRestaurant.map((decor) => (
                 <div class="col-sm-3">
                   <div className="foodRestaurant">
-                    <img
-                      src={"http://127.0.0.1:8000/storage/" + decor.avatar}
-                      class="image"
-                    />
+                    <img src={decor.avatar} class="image" />
                     <Link to={"/home/vendor/detail/" + decor.id}>
                       {" "}
                       <div class="middle">

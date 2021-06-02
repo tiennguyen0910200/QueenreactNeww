@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../header/Headerbig.css";
 import "../header/Headersmall.css";
 class Header extends Component {
@@ -27,7 +27,6 @@ class Header extends Component {
       cursor: "pointer",
     };
     let checkname = localStorage.getItem("nameUser");
-    console.log(checkname);
     return (
       <div>
         <nav className="mb-1 navbar navbar-expand-lg navbar-dark default-color">
@@ -51,7 +50,7 @@ class Header extends Component {
           >
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <Link to="/home/restaurant">
+                <Link to="/home/restaurant" id="item">
                   <a className="nav-link">Nhà hàng & Cửa hàng</a>
                 </Link>
               </li>

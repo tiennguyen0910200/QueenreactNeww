@@ -6,12 +6,15 @@
   .navbar-dark .navbar-nav .nav-link {
     color: #fff;
   }
-  .nav-item .active:hover a {
+  #item{
+    color: red!important;
+  }
+  /* .nav-item .active:hover a {
     text-decoration: none;
   }
   .nav-link:hover a {
     text-decoration: none;
-  }
+  } */
   .header_bottom {
     background-color: #ededed;
     height: 100px;
@@ -22,4 +25,8 @@
     background-color: white;
     border-radius: 5px;
   }
+}
+
+a:hover{
+  text-decoration: none!important;
 }
