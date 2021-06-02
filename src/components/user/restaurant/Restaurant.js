@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
+import Footer from "../footer/Footer";
+import Header from "../header/Header";
 import "../restaurant/Restaurantbig.css";
 import "../restaurant/Restaurantsmall.css";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router";
 class Restaurant extends Component {
   constructor() {
     super();
@@ -12,7 +12,7 @@ class Restaurant extends Component {
       foodrestaurant: [],
       cakerestaurant: [],
       speakerrestaurant: [],
-      decorrestaurant: []   
+      decorrestaurant: [],
     };
     this.getFoodRestaurant();
     this.getCakeRestaurant();
@@ -141,17 +141,17 @@ class Restaurant extends Component {
                           <input type="checkbox" checked="checked" />
                           &ensp;Cam kết thời gian
                         </label>
-                        <br/>
+                        <br />
                         <label>
                           <input type="checkbox" checked="checked" />
                           &ensp;Cam kết nguyên vẹn
                         </label>
-                        <br/>
+                        <br />
                         <label>
                           <input type="checkbox" checked="checked" />
                           &ensp;Cam kết giá cả
                         </label>
-                        <br/>
+                        <br />
                         <label>
                           <input type="checkbox" checked="checked" />
                           &ensp;Cam kết hoàn tiền 100%
@@ -159,115 +159,125 @@ class Restaurant extends Component {
                       </li>
                     </ul>
                   </div>
-                  <br/>
+                  <br />
                   <div className="giatri">
                     <ul>
-                      <li><a class="active" href="#home">Giá trị bền vững</a></li>
-                      <li><img src="https://i.imgur.com/dsPRDTv.jpg" alt="" width="268px" height="130px"/></li>
-                      <li><i class="fas fa-tags">&ensp;Ưu đãi tốt nhất</i></li>
-                      <li><i class="fas fa-truck">&ensp;Đáp ứng mọi yêu cầu</i></li>
-                      <li><i class="fas fa-home">&ensp;Phục vụ tận nhà</i></li>
-                      <li><i class="far fa-money-bill-alt">&ensp;Giá cả hợp lí</i></li>
+                      <li>
+                        <a class="active" href="#home">
+                          Giá trị bền vững
+                        </a>
+                      </li>
+                      <li>
+                        <img
+                          src="https://firebasestorage.googleapis.com/v0/b/upload-queen.appspot.com/o/giatri.jpg?alt=media&token=86c08712-ceee-4f87-9865-2d4dda8addb5"
+                          alt=""
+                          width="268px"
+                          height="130px"
+                        />
+                      </li>
+                      <li>
+                        <i class="fas fa-tags">&ensp;Ưu đãi tốt nhất</i>
+                      </li>
+                      <li>
+                        <i class="fas fa-truck">&ensp;Đáp ứng mọi yêu cầu</i>
+                      </li>
+                      <li>
+                        <i class="fas fa-home">&ensp;Phục vụ tận nhà</i>
+                      </li>
+                      <li>
+                        <i class="far fa-money-bill-alt">&ensp;Giá cả hợp lí</i>
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
               <div class="col-sm-8">
-               <div class="container">
-               <h3>Dịch Vụ Thức Ăn</h3>
-                 <div class="row">
-                   
-                   {this.state.foodrestaurant.map((food)=>
-                   <div class="col-sm-4">
-                    <div>
-                      <div className="allfoodRestaurant">
-                      <img src={'http://127.0.0.1:8000/storage/'+ food.avatar } className="image"/>
-                      <Link to ={'/home/vendor/detail/'+food.id}>
-                      <div class="middle">
-                        <div class="text">Xem</div>
+                <div class="container">
+                  <h3>Dịch Vụ Thức Ăn</h3>
+                  <div class="row">
+                    {this.state.foodrestaurant.map((food) => (
+                      <div class="col-sm-4">
+                        <div>
+                          <div className="allfoodRestaurant">
+                            <img src={food.avatar} className="image" />
+                            <Link to={"/home/vendor/detail/" + food.id}>
+                              <div class="middle">
+                                <div class="text">Xem</div>
+                              </div>
+                            </Link>
+                          </div>
+                          <p>{food.name}</p>
+                        </div>
                       </div>
-                      </Link>
+                    ))}
+                    <hr />
+                  </div>
+                </div>
+                <div class="container">
+                  <h3>Dịch Vụ Bánh Kem</h3>
+                  <div class="row">
+                    {this.state.cakerestaurant.map((cake) => (
+                      <div class="col-sm-4">
+                        <div>
+                          <div className="allfoodRestaurant">
+                            <img src={cake.avatar} className="image" />
+                            <Link to={"/home/vendor/detail/" + cake.id}>
+                              <div class="middle">
+                                <div class="text">Xem</div>
+                              </div>
+                            </Link>
+                          </div>
+                          <p>{cake.name}</p>
+                        </div>
                       </div>
-                      <p >{food.name}</p>  
-                      </div>                         
-                    </div>
-                  )}
-                  <hr/>
-                 </div>
-                 
-               </div>
-               <div class="container">
-               <h3>Dịch Vụ Bánh Kem</h3>
-                 <div class="row">
-                   
-                   {this.state.cakerestaurant.map((cake)=>
-                   <div class="col-sm-4">
-                    <div>
-                      <div className="allfoodRestaurant">
-                      <img src={'http://127.0.0.1:8000/storage/'+ cake.avatar } className="image"/> 
-                      <Link to ={'/home/vendor/detail/'+cake.id}>
-                      <div class="middle">
-                        <div class="text">Xem</div>
-                      </div>
-                      </Link>
-                      </div>
-                      <p >{cake.name}</p>  
-                      </div>                         
-                    </div>
-                  )}
-                  <hr/>
-                 </div>
-                 
-               </div>
-
+                    ))}
+                    <hr />
+                  </div>
+                </div>
               </div>
             </div>
             <div class="container">
-               <h3>Dịch Vụ Loa Máy</h3>
-                 <div class="row">
-                   
-                   {this.state.speakerrestaurant.map((speaker)=>
-                   <div class="col-sm-3">
+              <h3>Dịch Vụ Loa Máy</h3>
+              <div class="row">
+                {this.state.speakerrestaurant.map((speaker) => (
+                  <div class="col-sm-3">
                     <div>
                       <div className="allfoodRestaurant">
-                      <img src={'http://127.0.0.1:8000/storage/'+ speaker.avatar } className="image"/> 
-                      <Link to ={'/home/vendor/detail/'+speaker.id}>
-                      <div class="middle">
-                        <div class="text">Xem</div>
+                        <img src={speaker.avatar} className="image" />
+                        <Link to={"/home/vendor/detail/" + speaker.id}>
+                          <div class="middle">
+                            <div class="text">Xem</div>
+                          </div>
+                        </Link>
                       </div>
-                      </Link>
-                      </div>
-                      <p >{speaker.name}</p>  
-                      </div>                         
+                      <p>{speaker.name}</p>
                     </div>
-                  )}
-                  <hr/>
-                 </div>
-                 
-               </div>
-               <div class="container">
-               <h3>Dịch Vụ Trang Trí</h3>
-                 <div class="row">
-                   
-                   {this.state.decorrestaurant.map((decor)=>
-                   <div class="col-sm-3">
+                  </div>
+                ))}
+                <hr />
+              </div>
+            </div>
+            <div class="container">
+              <h3>Dịch Vụ Trang Trí</h3>
+              <div class="row">
+                {this.state.decorrestaurant.map((decor) => (
+                  <div class="col-sm-3">
                     <div>
                       <div className="allfoodRestaurant">
-                      <img src={'http://127.0.0.1:8000/storage/'+ decor.avatar } className="image"/>
-                      <Link to ={'/home/vendor/detail/'+decor.id}>
-                      <div class="middle">
-                        <div class="text">Xem</div>
-                      </div> 
-                      </Link>
+                        <img src={decor.avatar} className="image" />
+                        <Link to={"/home/vendor/detail/" + decor.id}>
+                          <div class="middle">
+                            <div class="text">Xem</div>
+                          </div>
+                        </Link>
                       </div>
-                      <p >{decor.name}</p>  
-                      </div>                         
+                      <p>{decor.name}</p>
                     </div>
-                  )}
-                  <hr/>
-                 </div>
-                 
-               </div>
+                  </div>
+                ))}
+                <hr />
+              </div>
+            </div>
           </div>
         </div>
         <Footer />

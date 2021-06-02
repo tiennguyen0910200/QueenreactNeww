@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import Header from "../header/Header";
+import { Link, withRouter } from "react-router-dom";
 import Footer from "../footer/Footer";
+import Header from "../header/Header";
 import "../home/Homebig.css";
 import "../home/Homesmall.css";
-import { get } from "../../services/api.service";
-import Search from "../search/Search";
-import { Link, withRouter } from "react-router-dom";
 class Home extends Component {
   constructor() {
     super();
@@ -148,6 +146,7 @@ class Home extends Component {
                 </div>
               ))}
             </div>
+            <br />
             <hr />
           </div>
           <br />

@@ -48,9 +48,11 @@
     border: 1px solid #d4d4d4;
     border-radius: 15px;
     font-size: 3px;
+    outline: none;
   }
   .contact-form textarea {
     height: 260px;
+    outline: none;
   }
   .text-area {
     font-size: 16px;
@@ -62,18 +64,23 @@
     font-size: medium;
     line-height: 3;
     padding-left: 5px;
+    outline: none;
   }
   .contact-form button {
     border: 1px solid #d4d4d4;
     width: 100px;
     background-color: #eaa28b;
+    outline: none;
   }
   .button-contact {
-    border-radius: 20px;
+    border-radius: 5px;
     background-color: #eaa28b;
     color: white;
     width: 20px;
     font-size: 17px;
     height: 40px;
+  }
+  .swal-button {
+    background-color: #eaa28b !important;
   }
 }

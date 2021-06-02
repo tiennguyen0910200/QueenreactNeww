@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import "../detailRestaurant/DetailRestaurantbig.css";
 import "../detailRestaurant/DetailRestaurantsmall.css";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router";
+import Footer from "../footer/Footer";
+import Header from "../header/Header";
 
 class DetailRestaurant extends Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class DetailRestaurant extends Component {
       product: [],
       login: user,
       getdataComment: [],
-      btnComment: false,
     };
     var id = props.match.params.id;
     localStorage.setItem("vendor_id", id);
@@ -24,8 +23,9 @@ class DetailRestaurant extends Component {
     this.getProduct(id);
     this.getAllComment(id);
     this.onAddComment = this.onAddComment.bind(this);
-    this.buttonComment = this.buttonComment.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
+
   getDetail(id) {
     fetch("http://127.0.0.1:8000/api/vendor/detail/" + id).then((response) => {
       response.json().then((data) => {
@@ -70,10 +70,11 @@ class DetailRestaurant extends Component {
       let comment = {
         user_id: user_id,
         content: content,
-        vendor_id: id,
+        vendor_id: vendor_id,
       };
       let postInJson = JSON.stringify(comment);
       console.log(vendor_id);
+      console.log(user_id);
       fetch("http://127.0.0.1:8000/api/addCommentvendor/" + vendor_id, {
         method: "post",
         headers: {
@@ -89,6 +90,29 @@ class DetailRestaurant extends Component {
       this.props.history.push("/home/login");
     }
   }
+  check(id) {
+    console.log(this.state.login);
+    if (this.state.login == id) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  deleteItem(id) {
+    return (event) => {
+      fetch("http://127.0.0.1:8000/api/distroycmtvendor/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        response.json().then((data) => {
+          console.log(id);
+          window.location.reload();
+        });
+      });
+    };
+  }
   myFunction(e) {
     e.preventDefault();
     var x = document.getElementById("myDIV").style;
@@ -97,11 +121,6 @@ class DetailRestaurant extends Component {
     } else {
       x.display = "block";
     }
-  }
-  buttonComment() {
-    this.setState({
-      btnComment: true,
-    });
   }
   render() {
     let detail = this.state.detail;
@@ -120,14 +139,20 @@ class DetailRestaurant extends Component {
                 <div class="col-sm-6">
                   <h1>{detail.name}</h1>
                   <br />
-                  <p>Phone:{detail.phone}</p>
-                  <p>Email:{detail.email}</p>
-                  <p>Address:{detail.address}</p>
-                  <p>Description:{detail.description}</p>
+                  <p>
+                    <b>Điện thoại:</b> {detail.phone}
+                  </p>
+                  <p>
+                    <b>Email:</b> {detail.email}
+                  </p>
+                  <p>
+                    <b>Địa chỉ:</b> {detail.address}
+                  </p>
+                  <p>
+                    <b>Mô tả:</b> {detail.description}
+                  </p>
                   <div className="detail-button">
-                    <button onClick={this.myFunction}>
-                      <i class="far fa-comment-dots">Viết đánh giá</i>
-                    </button>
+                    <button onClick={this.myFunction}>Viết đánh giá</button>
                   </div>
                   <div id="myDIV">
                     <form onSubmit={this.onAddComment}>
@@ -171,8 +196,37 @@ class DetailRestaurant extends Component {
                   <div className="danhGia">
                     {this.state.getdataComment.map((comment) => (
                       <div>
-                        <h6>{comment.name}</h6>
-                        <p>{comment.content}</p>
+                        {this.check(comment.user_id) ? (
+                          <div>
+                            <h6>
+                              <i class="far fa-user"></i>&ensp;{comment.name}
+                            </h6>
+
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <p>{comment.content}</p>
+                              </div>
+                              <div class="col-sm-6">
+                                <button onClick={this.deleteItem(comment.id)}>
+                                  <i class="far fa-trash-alt"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div>
+                            <h6>
+                              <i class="far fa-user"></i>&ensp;{comment.name}
+                            </h6>
+
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <p>{comment.content}</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        <hr style={{ marginLeft: "0", width: "30px" }} />
                       </div>
                     ))}
                     <br />
