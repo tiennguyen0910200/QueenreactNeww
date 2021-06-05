@@ -15,6 +15,7 @@ class Payment extends Component {
     this.getTotalPrice();
     this.onPaymentAlert = this.onPaymentAlert.bind(this);
     this.momoPayment = this.momoPayment.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
   }
   getUserOrder() {
     fetch("http://127.0.0.1:8000/api/product/getOrder").then((response) => {
@@ -42,18 +43,6 @@ class Payment extends Component {
     });
   }
   onPaymentAlert(event) {
-    event.preventDefault();
-    this.props.history.push(this.state.momoUrl);
-    // fetch("http://127.0.0.1:8000/api/orderlist/delete", {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   // body: postInJson
-    // }).then((response) => {
-    //   alert("Đang chờ admin phê duyệt");
-    //   this.props.history.push("/");
-    // });
     event.preventDefault();
     let vendor_id = localStorage.getItem("vendorList1");
     let order_id = localStorage.getItem("order_id");
@@ -93,41 +82,31 @@ class Payment extends Component {
       });
     });
   }
+  sendEmail() {
+    let emailUser = localStorage.getItem("emailUser");
+    fetch("http://127.0.0.1:8000/api/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods":
+          "POST, PUT, GET, OPTIONS, DELETE, PATCH",
+      },
+    }).then((response) => {
+      response.json().then((data) => {
+        console.log("payment", data);
+        this.setState({
+          users: emailUser,
+        });
+        alert("Đang chờ admin phê duyệt");
+        this.props.history.push("/");
+      });
+    });
+  }
   render() {
     let userorder = this.state.userOrder;
     return (
       <div className="container">
         <div className="contain">
-          <div className="flex-PM">
-            <div>Giá trị đơn hàng </div>
-            <div>Phí giao dịch </div>
-            <div>Thành tiền </div>
-          </div>
-          <hr className="gach" />
-          {/*  */}
-          <div className="flex-PM">
-            <div>
-              {this.state.totalPrice.map((total, index) => (
-                <strong>
-                  <b>
-                    {total.sumPrice} <span>VNĐ</span>
-                  </b>
-                </strong>
-              ))}
-            </div>
-            <div>Miễn phí</div>
-            <div>
-              {this.state.totalPrice.map((total, index) => (
-                <strong>
-                  <b>
-                    {total.sumPrice} <span>VNĐ</span>
-                  </b>
-                </strong>
-              ))}
-            </div>
-          </div>
-          {/*  */}
-
           <div className="enter">
             <div className="flex-payment">
               <div>
@@ -151,6 +130,7 @@ class Payment extends Component {
                     <div className="margin">Số điện thoại</div>
                     <div className="margin">Thời gian giao</div>
                     <div className="margin">Ghi chú</div>
+                    <div className="margin">Tổng tiền</div>
                   </div>
                   <div>
                     <b>
@@ -159,6 +139,18 @@ class Payment extends Component {
                       <div className="margin">{userorder.phone}</div>
                       <div className="margin">{userorder.order_time}</div>
                       <div className="margin">{userorder.note}</div>
+                      <div className="margin">
+                        {this.state.totalPrice.map((total, index) => (
+                          <strong>
+                            <b>
+                              {new Intl.NumberFormat("ar-US").format(
+                                total.sumPrice
+                              )}
+                              &ensp;<span>VNĐ</span>
+                            </b>
+                          </strong>
+                        ))}
+                      </div>
                     </b>
                   </div>
                 </div>
@@ -202,21 +194,16 @@ class Payment extends Component {
                   Thanh toán thẻ tín dụng
                   <br />
                 </p>
-                {/* <form onSubmit={this.momoPayment} action="">
-                            <button type="submit" className="btn-payment" ><b>
-                               Online
-                         </b></button>
-                        </form> */}
               </div>
             </div>
             {this.state.check ? (
-              <form onSubmit={this.onPaymentAlert} action="">
+              <form onSubmit={this.sendEmail} action="">
                 <button type="submit" className="btn-payment">
                   <b>Hoàn tất</b>
                 </button>
               </form>
             ) : (
-              <form onSubmit={this.onPaymentAlert} action="">
+              <form onSubmit={this.momoPayment} action="">
                 <button type="submit" className="btn-payment">
                   <b>
                     <a href={this.state.momoUrl}>Thanh toán bằng Momo</a>

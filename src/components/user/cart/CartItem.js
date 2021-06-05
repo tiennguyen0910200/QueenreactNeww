@@ -100,9 +100,11 @@ export default class ExpenseTableRow extends Component {
                             +
                           </button>
                         </td>
-                        <td style={{ paddingLeft: "50px" }}>
-                          {item.price}
-                          <span>VNĐ</span>
+                        <td style={{ paddingLeft: "40px" }}>
+                          {new Intl.NumberFormat("ar-US").format(
+                            item.price * items.quantity
+                          )}
+                          &ensp;<span>VNĐ</span>
                         </td>
                         <td style={{ paddingLeft: "25px" }}>
                           <Button
