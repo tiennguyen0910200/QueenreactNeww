@@ -76,8 +76,6 @@ class Checkout extends Component {
       order_time: order_time,
       note: note,
       status: status,
-      user_id: user_id,
-      vendor_id: 1,
       orderlist_id: 1,
     };
     let postInJson = JSON.stringify(order);
@@ -182,7 +180,10 @@ class Checkout extends Component {
                       {this.state.totalPrice.map((total, index) => (
                         <strong>
                           <b>
-                            {total.sumPrice} <span>VNĐ</span>
+                            {new Intl.NumberFormat("ar-US").format(
+                              total.sumPrice
+                            )}
+                            &ensp;<span>VNĐ</span>
                           </b>
                         </strong>
                       ))}
