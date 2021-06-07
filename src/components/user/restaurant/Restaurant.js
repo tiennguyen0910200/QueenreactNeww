@@ -20,44 +20,52 @@ class Restaurant extends Component {
     this.getDecorRestaurant();
   }
   getFoodRestaurant() {
-    fetch("http://127.0.0.1:8000/api/allfoodrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          foodrestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/allfoodrtr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            foodrestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getCakeRestaurant() {
-    fetch("http://127.0.0.1:8000/api/allcakertr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          cakerestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/allcakertr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            cakerestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getSpeakerRestaurant() {
-    fetch("http://127.0.0.1:8000/api/allspeakerrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          speakerrestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/allspeakerrtr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            speakerrestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getDecorRestaurant() {
-    fetch("http://127.0.0.1:8000/api/alldecorrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          decorrestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/alldecorrtr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            decorrestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
 
   render() {

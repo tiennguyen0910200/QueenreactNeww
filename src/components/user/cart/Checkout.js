@@ -14,6 +14,11 @@ class Checkout extends Component {
       totalPrice: [],
       order: [],
       carts: [],
+      userInfor: [],
+      errormessage: "",
+      name: "",
+      phone: "",
+      address: "",
     };
     var id = props.match.params.id;
     // let product_id= localStorage.getItem('product_id');
@@ -21,10 +26,11 @@ class Checkout extends Component {
     // this.getAllProducts();
     this.getTotalPrice();
     this.getTotalProduct();
+    this.getUserToFillForm();
     this.onOrderSubmit = this.onOrderSubmit.bind(this);
   }
   getAllProducts() {
-    fetch("http://127.0.0.1:8000/api/cart").then((response) => {
+    fetch("http://queen-party-be.herokuapp.com/api/cart").then((response) => {
       response.json().then((data) => {
         console.log(data);
         this.setState({
@@ -34,28 +40,38 @@ class Checkout extends Component {
     });
   }
   getTotalPrice() {
-    fetch("http://127.0.0.1:8000/api/totalPrice").then((response) => {
-      response.json().then((data) => {
-        localStorage.setItem("priceBill", JSON.stringify(data[0].sumPrice));
-        console.log(data);
-        this.setState({
-          totalPrice: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalPrice").then(
+      (response) => {
+        response.json().then((data) => {
+          localStorage.setItem("priceBill", JSON.stringify(data[0].sumPrice));
+          console.log(data);
+          this.setState({
+            totalPrice: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getTotalProduct() {
-    fetch("http://127.0.0.1:8000/api/totalProduct").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          total: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalProduct").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            total: data,
+          });
         });
-      });
+      }
+    );
+  }
+  onTodoChange(value) {
+    this.setState({
+      name: value,
     });
   }
   onOrderSubmit(event) {
     event.preventDefault();
+    let err = "";
     let user_id = localStorage.getItem("idUser");
     // let vendor_id = localStorage.getItem("vendorList2");
     // let orderlist_id = localStorage.getItem("vendorList2");
@@ -64,7 +80,16 @@ class Checkout extends Component {
     let name = event.target["name"].value;
     let phone = event.target["phone"].value;
     let address = event.target["address"].value;
-    let order_time = event.target["order_time"].value;
+    let order_time = new Date(event.target["order_time"].value);
+    let today = new Date();
+    if (order_time.getTime() < today.getTime()) {
+      err = (
+        <p style={{ color: "red", fontSize: "15px", marginLeft: "15px" }}>
+          Thời gian đặt hàng phải lớn hơn ngày hiện tại (sau 2 ngày)
+        </p>
+      );
+    }
+    this.setState({ errormessage: err });
     let note = event.target["note"].value;
     let status = "cho phe duyet";
 
@@ -76,24 +101,25 @@ class Checkout extends Component {
       order_time: order_time,
       note: note,
       status: status,
+      user: user_id,
       orderlist_id: 1,
     };
     let postInJson = JSON.stringify(order);
     localStorage.setItem("order_id", order.id);
     console.log("order_list");
-    fetch("http://127.0.0.1:8000/api/product/order", {
+    fetch("http://queen-party-be.herokuapp.com/api/product/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Methods":
-          "POST, PUT, GET, OPTIONS, DELETE, PATCH",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
       },
       body: postInJson,
     }).then((response) => {
       localStorage.setItem("order_id", order.id);
-      console.log("order_list");
       response.json().then((order) => {
-        console.log(order);
         alert("Xác nhận đơn hàng");
         this.props.history.push("/home/payment");
       });
@@ -102,7 +128,7 @@ class Checkout extends Component {
 
   componentDidMount() {
     axios
-      .get("http://127.0.0.1:8000/api/test/")
+      .get("http://queen-party-be.herokuapp.com/api/test/")
       .then((res) => {
         // localStorage.setItem("vendorList1", JSON.stringify(res.data[0]["id"]));
         // localStorage.setItem("vendorList2", JSON.stringify(res.data[1]["id"]));
@@ -119,6 +145,18 @@ class Checkout extends Component {
     return this.state.carts.map((res, i) => {
       return <ExpenseTableRow obj={res} key={i} />;
     });
+  }
+  getUserToFillForm() {
+    fetch("http://queen-party-be.herokuapp.com/api/getLastUser").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            userInfor: data,
+          });
+        });
+      }
+    );
   }
   render() {
     let totalProduct = this.state.total;
@@ -217,6 +255,8 @@ class Checkout extends Component {
                             id="name"
                             type="text"
                             name="name"
+                            value={this.state.userInfor.name}
+                            // onChange={(e) => this.onTodoChange(e.target.value)}
                             placeholder="Tên của bạn.."
                             required
                           />
@@ -234,9 +274,10 @@ class Checkout extends Component {
                             id="phone"
                             name="phone"
                             type="number"
+                            value={this.state.userInfor.phone}
+                            // onChange={(e) => this.onTodoChange(e.target.value)}
                             placeholder="Số điện thoại của bạn.."
                             required
-                            type="number"
                           />
                         </div>
                       </div>
@@ -252,6 +293,8 @@ class Checkout extends Component {
                             id="address"
                             name="address"
                             type="text"
+                            value={this.state.userInfor.address}
+                            // onChange={(e) => this.onTodoChange(e.target.value)}
                             placeholder="Địa chỉ của bạn.."
                             required
                           />
@@ -272,6 +315,8 @@ class Checkout extends Component {
                             name="order_time"
                             required
                           />
+                          <br></br>
+                          {this.state.errormessage}
                         </div>
                       </div>
                       <div>
@@ -285,6 +330,7 @@ class Checkout extends Component {
                             name="note"
                             type="text"
                             placeholder="Ghi chú.."
+                            style={{ height: "100px" }}
                           />
                         </div>
                       </div>

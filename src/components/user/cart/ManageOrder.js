@@ -33,7 +33,7 @@ class ManageOrder extends Component {
     this.ReviewSubmit = this.ReviewSubmit.bind(this);
   }
   getAllProducts() {
-    fetch("http://127.0.0.1:8000/api/cart").then((response) => {
+    fetch("http://queen-party-be.herokuapp.com/api/cart").then((response) => {
       response.json().then((data) => {
         console.log(data);
         this.setState({
@@ -45,37 +45,43 @@ class ManageOrder extends Component {
   getOrderWithUser() {
     this.setState({ statusOrder: true });
     // let user_id = localStorage.getItem('idUser');
-    fetch("http://127.0.0.1:8000/api/getOrderWithUser").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          orderList: data,
+    fetch("http://queen-party-be.herokuapp.com/api/getOrderWithUser").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            orderList: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getTotalPrice() {
-    fetch("http://127.0.0.1:8000/api/totalPrice").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          totalPrice: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalPrice").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            totalPrice: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getTotalProduct() {
-    fetch("http://127.0.0.1:8000/api/totalProduct").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          total: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalProduct").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            total: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   onCancelOrder() {
-    fetch("http://127.0.0.1:8000/api/order/cancel", {
+    fetch("http://queen-party-be.herokuapp.com/api/order/cancel", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +106,7 @@ class ManageOrder extends Component {
       product_id: product_id,
     };
     let postInJson = JSON.stringify(review);
-    fetch("http://127.0.0.1:8000/api/product/review", {
+    fetch("http://queen-party-be.herokuapp.com/api/product/review", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -133,7 +139,7 @@ class ManageOrder extends Component {
       product_id: product_id,
     };
     let postInJson = JSON.stringify(review);
-    fetch("http://127.0.0.1:8000/api/product/review", {
+    fetch("http://queen-party-be.herokuapp.com/api/product/review", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -34,14 +34,16 @@ class DetailFood extends Component {
     this.deleteItem = this.deleteItem.bind(this);
   }
   getDetailProduct(id) {
-    fetch("http://127.0.0.1:8000/api/product/detail/" + id).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          detailProduct: data,
+    fetch("http://queen-party-be.herokuapp.com/api/product/detail/" + id).then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            detailProduct: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   onAddComment(event) {
     if (this.state.login != null) {
@@ -62,7 +64,7 @@ class DetailFood extends Component {
       };
       let postInJson = JSON.stringify(comment);
       console.log(vendor_id);
-      fetch("http://127.0.0.1:8000/api/addComment/" + vendor_id, {
+      fetch("http://queen-party-be.herokuapp.com/api/addComment/" + vendor_id, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -92,15 +94,17 @@ class DetailFood extends Component {
     }
   }
   getAllComment(id) {
-    fetch("http://127.0.0.1:8000/api/totalCommentp/" + id).then((response) => {
-      console.log(response);
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          getdataComment: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalCommentp/" + id).then(
+      (response) => {
+        console.log(response);
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            getdataComment: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   check(id) {
     console.log(this.state.login);
@@ -112,7 +116,7 @@ class DetailFood extends Component {
   }
   deleteItem(id) {
     return (event) => {
-      fetch("http://127.0.0.1:8000/api/distroycmtproduct/" + id, {
+      fetch("http://queen-party-be.herokuapp.com/api/distroycmtproduct/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +142,7 @@ class DetailFood extends Component {
         quantity: 1,
       };
       let postInJson = JSON.stringify(orders);
-      fetch("http://127.0.0.1:8000/api/product/orderlist", {
+      fetch("http://queen-party-be.herokuapp.com/api/product/orderlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -160,7 +164,7 @@ class DetailFood extends Component {
   }
   getStar() {
     let product_id = localStorage.getItem("product_id");
-    fetch("http://127.0.0.1:8000/api/getStar/" + product_id).then(
+    fetch("http://queen-party-be.herokuapp.com/api/getStar/" + product_id).then(
       (response) => {
         response.json().then((data) => {
           console.log(data);
@@ -173,7 +177,7 @@ class DetailFood extends Component {
   }
   deleteItem(id) {
     return (event) => {
-      fetch("http://127.0.0.1:8000/api/distroycmtproduct/" + id, {
+      fetch("http://queen-party-be.herokuapp.com/api/distroycmtproduct/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
