@@ -86,6 +86,7 @@ class Payment extends Component {
       id_user: localStorage.idUser,
       id_userOrder: localStorage.order_id,
     };
+    console.log(data);
     let postInJson = JSON.stringify(data);
     fetch("http://127.0.0.1:8000/api/sendEmail", {
       method: "POST",

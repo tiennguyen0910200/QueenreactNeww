@@ -68,7 +68,7 @@ class Checkout extends Component {
   onOrderSubmit(event) {
     event.preventDefault();
     let err = "";
-    let user_id = localStorage.getItem("idUser");
+    let user = localStorage.getItem("idUser");
     let name = event.target["name"].value;
     let phone = event.target["phone"].value;
     let address = event.target["address"].value;
@@ -90,7 +90,7 @@ class Checkout extends Component {
       order_time: order_time,
       note: note,
       status: "ĐH mới",
-      user: user_id,
+      user: user,
       orderlist_id: 1,
     };
     let postInJson = JSON.stringify(order);
