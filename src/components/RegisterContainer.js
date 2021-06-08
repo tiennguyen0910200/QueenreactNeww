@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import ReactDOM from "react-dom";
-import FlashMessage from "react-flash-message";
 import "./style/register2.css";
 class RegisterContainer extends Component {
   // 2.1
@@ -57,7 +56,7 @@ class RegisterContainer extends Component {
     ReactDOM.findDOMNode(this).scrollIntoView();
     let userData = this.state.user;
     axios
-      .post("http://queen-party-be.herokuapp.com/api/auth/register", userData)
+      .post("http://127.0.0.1:8000/api/auth/register", userData)
       .then((response) => {
         return response;
       })

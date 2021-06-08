@@ -18,33 +18,29 @@ class Payment extends Component {
     this.sendEmail = this.sendEmail.bind(this);
   }
   getUserOrder() {
-    fetch("http://queen-party-be.herokuapp.com/api/product/getOrder").then(
-      (response) => {
-        response.json().then((data) => {
-          localStorage.setItem("order_id", data.id);
-          console.log("order_list");
-          console.log(data);
-          this.setState({
-            userOrder: data,
-          });
+    fetch("http://127.0.0.1:8000/api/product/getOrder").then((response) => {
+      response.json().then((data) => {
+        localStorage.setItem("order_id", data.id);
+        console.log("order_list");
+        console.log(data);
+        this.setState({
+          userOrder: data,
         });
-      }
-    );
+      });
+    });
   }
   // componentDidMount() {
   //     this.setState({ userOrder: this.props.userorder });
   // }
   getTotalPrice() {
-    fetch("http://queen-party-be.herokuapp.com/api/totalPrice").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            totalPrice: data,
-          });
+    fetch("http://127.0.0.1:8000/api/totalPrice").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          totalPrice: data,
         });
-      }
-    );
+      });
+    });
   }
   onPaymentAlert(event) {
     event.preventDefault();
@@ -55,7 +51,7 @@ class Payment extends Component {
       order_id: order_id,
     };
     let postInJson = JSON.stringify(notis);
-    fetch("http://queen-party-be.herokuapp.com/api/notification", {
+    fetch("http://127.0.0.1:8000/api/notification", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +63,7 @@ class Payment extends Component {
     });
   }
   momoPayment() {
-    fetch("http://queen-party-be.herokuapp.com/api/paymentOnline", {
+    fetch("http://127.0.0.1:8000/api/paymentOnline", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,12 +78,15 @@ class Payment extends Component {
           check: false,
           checkMomo: true,
         });
-        //window.location.reload();
       });
     });
   }
   sendEmail() {
-    let emailUser = localStorage.getItem("emailUser");
+    let data = {
+      id_user: localStorage.idUser,
+      id_userOrder: localStorage.order_id,
+    };
+    let postInJson = JSON.stringify(data);
     fetch("http://127.0.0.1:8000/api/sendEmail", {
       method: "POST",
       headers: {
@@ -95,19 +94,10 @@ class Payment extends Component {
         "Access-Control-Allow-Methods":
           "POST, PUT, GET, OPTIONS, DELETE, PATCH",
       },
-      data: {
-        id: localStorage.order_id,
-        id_user: localStorage.idUser,
-      },
+      body: postInJson,
     }).then((response) => {
-      response.json().then((data) => {
-        console.log("payment", data);
-        this.setState({
-          users: emailUser,
-        });
-        alert("Đang chờ admin phê duyệt");
-        this.props.history.push("/");
-      });
+      alert("Đang chờ admin phê duyệt");
+      this.props.history.push("/");
     });
   }
   render() {

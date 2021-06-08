@@ -17,16 +17,14 @@ class DetailService extends Component {
   }
   getCategorydetail(id) {
     console.log(id);
-    fetch("http://queen-party-be.herokuapp.com/api/service/detail/" + id).then(
-      (response) => {
-        response.json().then((data) => {
-          this.setState({
-            categoriesdetail: data.service,
-            description: data.description,
-          });
+    fetch("http://127.0.0.1:8000/api/service/detail/" + id).then((response) => {
+      response.json().then((data) => {
+        this.setState({
+          categoriesdetail: data.service,
+          description: data.description,
         });
-      }
-    );
+      });
+    });
   }
   render() {
     console.log(this.state.description);

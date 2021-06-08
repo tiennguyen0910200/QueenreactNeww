@@ -23,64 +23,56 @@ class Plan extends Component {
     this.getCategory31();
   }
   getDetailPlan(id) {
-    fetch(
-      "http://queen-party-be.herokuapp.com/api/vendor/detail/plan/" + id
-    ).then((response) => {
+    fetch("http://127.0.0.1:8000/api/vendor/detail/plan/" + id).then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            detailPlan: data,
+          });
+        });
+      }
+    );
+  }
+  getCategory21() {
+    fetch("http://127.0.0.1:8000/api/product21").then((response) => {
       response.json().then((data) => {
         console.log(data);
         this.setState({
-          detailPlan: data,
+          categories21: data,
         });
       });
     });
   }
-  getCategory21() {
-    fetch("http://queen-party-be.herokuapp.com/api/product21").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            categories21: data,
-          });
-        });
-      }
-    );
-  }
   getCategory11() {
-    fetch("http://queen-party-be.herokuapp.com/api/product11").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            categories11: data,
-          });
+    fetch("http://127.0.0.1:8000/api/product11").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          categories11: data,
         });
-      }
-    );
+      });
+    });
   }
   getCategory51() {
-    fetch("http://queen-party-be.herokuapp.com/api/product51").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            categories51: data,
-          });
+    fetch("http://127.0.0.1:8000/api/product51").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          categories51: data,
         });
-      }
-    );
+      });
+    });
   }
   getCategory31() {
-    fetch("http://queen-party-be.herokuapp.com/api/product31").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            categories31: data,
-          });
+    fetch("http://127.0.0.1:8000/api/product31").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          categories31: data,
         });
-      }
-    );
+      });
+    });
   }
   render() {
     let detailPlan = this.state.detailPlan;

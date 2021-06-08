@@ -30,7 +30,7 @@ class Checkout extends Component {
     this.onOrderSubmit = this.onOrderSubmit.bind(this);
   }
   getAllProducts() {
-    fetch("http://queen-party-be.herokuapp.com/api/cart").then((response) => {
+    fetch("http://127.0.0.1:8000/api/cart").then((response) => {
       response.json().then((data) => {
         console.log(data);
         this.setState({
@@ -40,29 +40,25 @@ class Checkout extends Component {
     });
   }
   getTotalPrice() {
-    fetch("http://queen-party-be.herokuapp.com/api/totalPrice").then(
-      (response) => {
-        response.json().then((data) => {
-          localStorage.setItem("priceBill", JSON.stringify(data[0].sumPrice));
-          console.log(data);
-          this.setState({
-            totalPrice: data,
-          });
+    fetch("http://127.0.0.1:8000/api/totalPrice").then((response) => {
+      response.json().then((data) => {
+        localStorage.setItem("priceBill", JSON.stringify(data[0].sumPrice));
+        console.log(data);
+        this.setState({
+          totalPrice: data,
         });
-      }
-    );
+      });
+    });
   }
   getTotalProduct() {
-    fetch("http://queen-party-be.herokuapp.com/api/totalProduct").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            total: data,
-          });
+    fetch("http://127.0.0.1:8000/api/totalProduct").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          total: data,
         });
-      }
-    );
+      });
+    });
   }
   onTodoChange(value) {
     this.setState({
@@ -73,10 +69,6 @@ class Checkout extends Component {
     event.preventDefault();
     let err = "";
     let user_id = localStorage.getItem("idUser");
-    // let vendor_id = localStorage.getItem("vendorList2");
-    // let orderlist_id = localStorage.getItem("vendorList2");
-    // var id = this.props.match.params.id;
-
     let name = event.target["name"].value;
     let phone = event.target["phone"].value;
     let address = event.target["address"].value;
@@ -85,36 +77,30 @@ class Checkout extends Component {
     if (order_time.getTime() < today.getTime()) {
       err = (
         <p style={{ color: "red", fontSize: "15px", marginLeft: "15px" }}>
-          Thời gian đặt hàng phải lớn hơn ngày hiện tại (sau 2 ngày)
+          Thời gian đặt hàng phải trước 2 ngày
         </p>
       );
     }
     this.setState({ errormessage: err });
     let note = event.target["note"].value;
-    let status = "cho phe duyet";
-
     let order = {
-      // id: id,
       name: name,
       phone: phone,
       address: address,
       order_time: order_time,
       note: note,
-      status: status,
+      status: "ĐH mới",
       user: user_id,
       orderlist_id: 1,
     };
     let postInJson = JSON.stringify(order);
     localStorage.setItem("order_id", order.id);
-    console.log("order_list");
-    fetch("http://queen-party-be.herokuapp.com/api/product/order", {
+    console.log(order);
+    fetch("http://127.0.0.1:8000/api/product/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
+        "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
       },
       body: postInJson,
     }).then((response) => {
@@ -128,10 +114,8 @@ class Checkout extends Component {
 
   componentDidMount() {
     axios
-      .get("http://queen-party-be.herokuapp.com/api/test/")
+      .get("http://127.0.0.1:8000/api/test/")
       .then((res) => {
-        // localStorage.setItem("vendorList1", JSON.stringify(res.data[0]["id"]));
-        // localStorage.setItem("vendorList2", JSON.stringify(res.data[1]["id"]));
         this.setState({
           carts: res.data,
         });
@@ -147,16 +131,14 @@ class Checkout extends Component {
     });
   }
   getUserToFillForm() {
-    fetch("http://queen-party-be.herokuapp.com/api/getLastUser").then(
-      (response) => {
-        response.json().then((data) => {
-          console.log(data);
-          this.setState({
-            userInfor: data,
-          });
+    fetch("http://127.0.0.1:8000/api/getLastUser").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          userInfor: data,
         });
-      }
-    );
+      });
+    });
   }
   render() {
     let totalProduct = this.state.total;
@@ -255,7 +237,7 @@ class Checkout extends Component {
                             id="name"
                             type="text"
                             name="name"
-                            value={this.state.userInfor.name}
+                            // value={this.state.userInfor.name}
                             // onChange={(e) => this.onTodoChange(e.target.value)}
                             placeholder="Tên của bạn.."
                             required
@@ -274,7 +256,7 @@ class Checkout extends Component {
                             id="phone"
                             name="phone"
                             type="number"
-                            value={this.state.userInfor.phone}
+                            // value={this.state.userInfor.phone}
                             // onChange={(e) => this.onTodoChange(e.target.value)}
                             placeholder="Số điện thoại của bạn.."
                             required
@@ -293,7 +275,7 @@ class Checkout extends Component {
                             id="address"
                             name="address"
                             type="text"
-                            value={this.state.userInfor.address}
+                            // value={this.state.userInfor.address}
                             // onChange={(e) => this.onTodoChange(e.target.value)}
                             placeholder="Địa chỉ của bạn.."
                             required

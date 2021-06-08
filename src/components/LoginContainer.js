@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link, Redirect, withRouter } from "react-router-dom";
-import FlashMessage from "react-flash-message";
 import axios from "axios";
 import "./style/Login.css";
 class LoginContainer extends Component {
@@ -40,7 +39,7 @@ class LoginContainer extends Component {
     this.setState({ formSubmitting: true });
     let userData = this.state.user;
     axios
-      .post("http://queen-party-be.herokuapp.com/api/auth/login", userData)
+      .post("http://127.0.0.1:8000/api/auth/login", userData)
       .then((response) => {
         return response;
       })
