@@ -27,35 +27,41 @@ class DetailRestaurant extends Component {
   }
 
   getDetail(id) {
-    fetch("http://127.0.0.1:8000/api/vendor/detail/" + id).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          detail: data,
+    fetch("http://queen-party-be.herokuapp.com/api/vendor/detail/" + id).then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            detail: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getProduct(id) {
-    fetch("http://127.0.0.1:8000/api/getproduct/" + id).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          product: data,
+    fetch("http://queen-party-be.herokuapp.com/api/getproduct/" + id).then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            product: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getAllComment(id) {
-    fetch("http://127.0.0.1:8000/api/totalComment/" + id).then((response) => {
-      console.log(response);
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          getdataComment: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalComment/" + id).then(
+      (response) => {
+        console.log(response);
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            getdataComment: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   onAddComment(event) {
     if (this.state.login != null) {
@@ -75,13 +81,16 @@ class DetailRestaurant extends Component {
       let postInJson = JSON.stringify(comment);
       console.log(vendor_id);
       console.log(user_id);
-      fetch("http://127.0.0.1:8000/api/addCommentvendor/" + vendor_id, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: postInJson,
-      }).then((response) => {
+      fetch(
+        "http://queen-party-be.herokuapp.com/api/addCommentvendor/" + vendor_id,
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: postInJson,
+        }
+      ).then((response) => {
         console.log(response);
         window.location.reload();
       });
@@ -100,7 +109,7 @@ class DetailRestaurant extends Component {
   }
   deleteItem(id) {
     return (event) => {
-      fetch("http://127.0.0.1:8000/api/distroycmtvendor/" + id, {
+      fetch("http://queen-party-be.herokuapp.com/api/distroycmtvendor/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

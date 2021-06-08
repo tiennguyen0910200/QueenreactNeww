@@ -18,29 +18,33 @@ class Payment extends Component {
     this.sendEmail = this.sendEmail.bind(this);
   }
   getUserOrder() {
-    fetch("http://127.0.0.1:8000/api/product/getOrder").then((response) => {
-      response.json().then((data) => {
-        localStorage.setItem("order_id", data.id);
-        console.log("order_list");
-        console.log(data);
-        this.setState({
-          userOrder: data,
+    fetch("http://queen-party-be.herokuapp.com/api/product/getOrder").then(
+      (response) => {
+        response.json().then((data) => {
+          localStorage.setItem("order_id", data.id);
+          console.log("order_list");
+          console.log(data);
+          this.setState({
+            userOrder: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   // componentDidMount() {
   //     this.setState({ userOrder: this.props.userorder });
   // }
   getTotalPrice() {
-    fetch("http://127.0.0.1:8000/api/totalPrice").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          totalPrice: data,
+    fetch("http://queen-party-be.herokuapp.com/api/totalPrice").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            totalPrice: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   onPaymentAlert(event) {
     event.preventDefault();
@@ -51,7 +55,7 @@ class Payment extends Component {
       order_id: order_id,
     };
     let postInJson = JSON.stringify(notis);
-    fetch("http://127.0.0.1:8000/api/notification", {
+    fetch("http://queen-party-be.herokuapp.com/api/notification", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +67,7 @@ class Payment extends Component {
     });
   }
   momoPayment() {
-    fetch("http://127.0.0.1:8000/api/paymentOnline", {
+    fetch("http://queen-party-be.herokuapp.com/api/paymentOnline", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,6 +94,10 @@ class Payment extends Component {
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods":
           "POST, PUT, GET, OPTIONS, DELETE, PATCH",
+      },
+      data: {
+        id: localStorage.order_id,
+        id_user: localStorage.idUser,
       },
     }).then((response) => {
       response.json().then((data) => {
@@ -206,7 +214,7 @@ class Payment extends Component {
               <form onSubmit={this.momoPayment} action="">
                 <button type="submit" className="btn-payment">
                   <b>
-                    <a href={this.state.momoUrl}>Thanh toán bằng Momo</a>
+                    <a href={this.state.momoUrl}>Momo</a>
                   </b>
                 </button>
               </form>

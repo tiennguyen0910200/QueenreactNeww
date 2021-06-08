@@ -26,17 +26,19 @@ class Home extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   getAllVendor() {
-    fetch("http://127.0.0.1:8000/api/allvendor").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          allvendor: data,
+    fetch("http://queen-party-be.herokuapp.com/api/allvendor").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            allvendor: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getVendor() {
-    fetch("http://127.0.0.1:8000/api/vendor").then((response) => {
+    fetch("http://queen-party-be.herokuapp.com/api/vendor").then((response) => {
       response.json().then((data) => {
         console.log(data);
         this.setState({
@@ -46,44 +48,52 @@ class Home extends Component {
     });
   }
   getFoodRestaurant() {
-    fetch("http://127.0.0.1:8000/api/foodrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          foodRestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/foodrtr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            foodRestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getSpeakerRestaurant() {
-    fetch("http://127.0.0.1:8000/api/speakerrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          speakerRestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/speakerrtr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            speakerRestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getCakeRestaurant() {
-    fetch("http://127.0.0.1:8000/api/cakertr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          cakeRestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/cakertr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            cakeRestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   getDeCorRestaurant() {
-    fetch("http://127.0.0.1:8000/api/decorrtr").then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        this.setState({
-          decorRestaurant: data,
+    fetch("http://queen-party-be.herokuapp.com/api/decorrtr").then(
+      (response) => {
+        response.json().then((data) => {
+          console.log(data);
+          this.setState({
+            decorRestaurant: data,
+          });
         });
-      });
-    });
+      }
+    );
   }
   handleChange(id) {
     this.setState({ value: id.target.value });

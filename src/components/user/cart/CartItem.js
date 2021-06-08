@@ -16,7 +16,7 @@ export default class ExpenseTableRow extends Component {
 
   deletecart(itemId) {
     axios
-      .delete("http://127.0.0.1:8000/api/deletecart/" + itemId)
+      .delete("http://queen-party-be.herokuapp.com/api/deletecart/" + itemId)
       .then((res) => {
         window.location.reload();
       })
@@ -26,15 +26,18 @@ export default class ExpenseTableRow extends Component {
   }
   onIncrease(itemId) {
     let product_id = localStorage.getItem("product_id");
-    fetch("http://127.0.0.1:8000/api/product/increase/" + itemId, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Methods":
-          "POST, PUT, GET, OPTIONS, DELETE, PATCH",
-        Authorization: product_id,
-      },
-    }).then((response) => {
+    fetch(
+      "http://queen-party-be.herokuapp.com/api/product/increase/" + itemId,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Methods":
+            "POST, PUT, GET, OPTIONS, DELETE, PATCH",
+          Authorization: product_id,
+        },
+      }
+    ).then((response) => {
       response.json().then((data) => {
         window.location.reload();
       });
@@ -42,15 +45,18 @@ export default class ExpenseTableRow extends Component {
   }
   onDecrease(itemId) {
     let product_id = localStorage.getItem("product_id");
-    fetch("http://127.0.0.1:8000/api/product/decrease/" + itemId, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Methods":
-          "POST, PUT, GET, OPTIONS, DELETE, PATCH",
-        Authorization: product_id,
-      },
-    }).then((response) => {
+    fetch(
+      "http://queen-party-be.herokuapp.com/api/product/decrease/" + itemId,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Methods":
+            "POST, PUT, GET, OPTIONS, DELETE, PATCH",
+          Authorization: product_id,
+        },
+      }
+    ).then((response) => {
       response.json().then((data) => {
         window.location.reload();
       });

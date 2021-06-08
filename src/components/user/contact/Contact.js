@@ -21,7 +21,7 @@ class Contact extends Component {
       content: content,
     };
     let postInJson = JSON.stringify(contact);
-    fetch("http://127.0.0.1:8000/api/contact", {
+    fetch("http://queen-party-be.herokuapp.com/api/contact", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
