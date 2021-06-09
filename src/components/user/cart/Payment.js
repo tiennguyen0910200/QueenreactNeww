@@ -81,13 +81,16 @@ class Payment extends Component {
       });
     });
   }
-  sendEmail() {
-    let data = {
-      id_user: localStorage.idUser,
-      id_userOrder: localStorage.order_id,
+  sendEmail(event) {
+    event.preventDefault();
+    let user = localStorage.getItem("idUser");
+    let order_id = localStorage.getItem("order_id");
+    let data_send = {
+      user: user,
+      order_id: order_id,
     };
-    console.log(data);
-    let postInJson = JSON.stringify(data);
+
+    let postInJson = JSON.stringify(data_send);
     fetch("http://127.0.0.1:8000/api/sendEmail", {
       method: "POST",
       headers: {
