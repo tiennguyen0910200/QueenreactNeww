@@ -74,7 +74,7 @@ class Contact extends Component {
                 </div>
                 <div className="infor">
                   <h4 style={{ fontWeight: "bold", color: "black" }}>Email</h4>
-                  <h6>queenparty@gmail.com</h6>
+                  <h6>queenpartydiu@gmail.com</h6>
                 </div>
               </div>
               <div style={{ display: "flex" }}>

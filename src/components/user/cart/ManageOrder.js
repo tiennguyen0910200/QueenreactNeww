@@ -136,10 +136,7 @@ class ManageOrder extends Component {
                   </div>
                   <div className="orders">
                     <div className="order">
-                      <div
-                        className="order-info"
-                        disabled={this.state.statusOrder}
-                      >
+                      <div className="order-info">
                         <div>
                           <div className="pull-left">
                             <div>

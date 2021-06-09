@@ -181,8 +181,8 @@ class DetailRestaurant extends Component {
                             <p>
                               {new Intl.NumberFormat("ar-US").format(
                                 product.price
-                              )}{" "}
-                              &ensp;đ
+                              )}
+                              VNĐ
                             </p>
                           </div>
                         </div>

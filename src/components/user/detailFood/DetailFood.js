@@ -211,7 +211,7 @@ class DetailFood extends Component {
                 </p>
                 <p>
                   <b>Giá: </b>
-                  {detailp.price}đ
+                  {new Intl.NumberFormat("ar-US").format(detailp.price)} VNĐ
                 </p>
                 <div className="flex">
                   <div>

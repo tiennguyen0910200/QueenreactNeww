@@ -2,17 +2,30 @@ import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import "./Checkout.css";
+import { withRouter } from "react-router";
 
-export default class ManageItem extends Component {
+class ManageItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cart: [],
+      orderList: {},
     };
     this.onValueChange = this.onValueChange.bind(this);
+    this.getOrderWithUser();
     this.ReviewSubmit = this.ReviewSubmit.bind(this);
   }
-
+  getOrderWithUser() {
+    this.setState({ statusOrder: true });
+    fetch("http://127.0.0.1:8000/api/getOrderWithUser").then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        this.setState({
+          orderList: data,
+        });
+      });
+    });
+  }
   onValueChange(event) {
     this.setState({
       selectedOption: event.target.value,
@@ -38,18 +51,21 @@ export default class ManageItem extends Component {
       },
       body: postInJson,
     }).then((response) => {
-      response.json().then((review) => {
-        alert("Cảm ơn bạn đã đánh giá sản phẩm");
-        this.props.history.push("/");
-      });
+      alert("Cảm ơn bạn đã đánh giá sản phẩm!");
+      this.props.history.push("/");
     });
   }
   render() {
     return (
       <div>
-        <h3>
-          <span>{this.props.obj.name}</span>
-        </h3>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h3>
+            <span>{this.props.obj.name}</span>
+          </h3>
+          <button className="btn btn-danger">
+            {this.state.orderList.status}
+          </button>
+        </div>
         <div className="product-flex">
           <table>
             {this.props.obj.productOrder.map((items) => {
@@ -77,19 +93,18 @@ export default class ManageItem extends Component {
                           &ensp;<span>VNĐ</span>
                         </td>
                         <td>
-                          <button
+                          <a
                             style={{
                               float: "right",
                               marginLeft: "200px",
                               marginTop: "20px",
+                              color: "blue",
                             }}
-                            type="button"
-                            className="btn btn-primary"
                             data-toggle="modal"
                             data-target="#exampleModalCenter"
                           >
                             Đánh giá
-                          </button>
+                          </a>
                         </td>
                         {/* <!-- Modal --> */}
                         <div
@@ -274,3 +289,4 @@ export default class ManageItem extends Component {
     );
   }
 }
+export default withRouter(ManageItem);
